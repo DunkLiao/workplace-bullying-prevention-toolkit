@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>法規尋字遊戲｜職場霸凌防治關鍵詞</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.grid-wrap{display:flex;justify-content:center;margin-bottom:20px}
+.grid-table{border-collapse:collapse}
+.grid-table td{width:36px;height:36px;text-align:center;font-size:16px;font-weight:700;border:1px solid var(--border);cursor:pointer;transition:all .15s;user-select:none;border-radius:3px;color:var(--text)}
+.grid-table td:hover{background:#eaf0f8}
+.grid-table td.selected{background:var(--navy-light);color:#fff}
+.grid-table td.found{background:var(--correct-bg);color:var(--correct);font-weight:800}
+.word-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;justify-content:center}
+.word-chip{padding:6px 14px;border-radius:99px;font-size:13px;font-weight:600;border:2px solid var(--border);background:var(--bg)}
+.word-chip.found{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);text-decoration:line-through}
+.stats-row{display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.stat-chip{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px}
+.stat-chip strong{color:var(--navy)}
+.btn-reset{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:8px}
+.btn-reset:hover{background:var(--navy-light)}
+.found-flash{text-align:center;font-size:14px;font-weight:700;padding:8px;border-radius:8px;margin-bottom:10px;display:none;animation:fadeIn .3s}
+.found-flash.show{display:block;background:var(--correct-bg);color:var(--correct)}
+.found-flash.show .found-word{font-size:18px}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.grid-table td{width:28px;height:28px;font-size:13px}.card{padding:16px 10px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">🔍</div>
+<div><h1>法規尋字遊戲</h1><p>在字母矩陣中找出隱藏的職場霸凌防治關鍵詞</p></div>
+</div>
+
+<div class="card">
+<div class="found-flash" id="found-flash"><span class="found-word" id="found-word"></span> 找到了！</div>
+<div class="stats-row">
+<div class="stat-chip">🔍 已找到：<strong id="found-count">0</strong> / 10</div>
+</div>
+<div class="word-list" id="word-list"></div>
+<div class="grid-wrap"><table class="grid-table" id="grid-table"></table></div>
+<p style="font-size:12px;color:var(--text-muted);text-align:center;margin-bottom:12px">點擊起點再點終點，選取水平或垂直連續詞彙（不支援對角線）</p>
+<button class="btn-reset" onclick="resetGame()">🔄 重新產生謎題</button>
+</div>
+<p class="footer-note">關鍵詞取自《職業安全衛生法》及《職場霸凌防治措施準則》</p>
+</div>
+
+<script>
+const WORDS=[
+{word:"職場霸凌",desc:"本法核心概念，§22-1 定義"},
+{word:"持續性",desc:"霸凌構成要件之一"},
+{word:"雇主義務",desc:"§22-2 雇主防治義務"},
+{word:"保密原則",desc:"調查處理之基本要求"},
+{word:"調查小組",desc:"百人以上須組成"},
+{word:"不利對待",desc:"§22-4 禁止報復"},
+{word:"申訴管道",desc:"10 人以上須設置"},
+{word:"利益迴避",desc:"調查人員迴避規定"},
+{word:"最高負責人",desc:"得向地方主管機關申訴"},
+{word:"申復機制",desc:"不服決定之救濟途徑"}
+];
+
+const SIZE=12;
+let grid=[], foundWords=new Set(), wordPositions=[];
+let selectStart=null;
+
+function s(id){return document.getElementById(id)}
+
+function generatePuzzle(){
+grid=Array.from({length:SIZE},()=>Array(SIZE).fill(''));
+wordPositions=[];
+const chars='職場霸凌持續性雇主義務保密則調小組不對待申管道益迴避最高負人復機制防治措施勞動檢查';
+const fillPool=chars.split('');
+
+const sorted=[...WORDS].sort((a,b)=>b.word.length-a.word.length);
+
+sorted.forEach(w=>{
+let placed=false;
+for(let attempt=0;attempt<100&&!placed;attempt++){
+const dir=Math.random()<0.5?'h':'v';
+const len=w.word.length;
+if(dir==='h'){
+const row=Math.floor(Math.random()*SIZE);
+const col=Math.floor(Math.random()*(SIZE-len+1));
+let ok=true;
+for(let i=0;i<len;i++){if(grid[row][col+i]!==''&&grid[row][col+i]!==w.word[i]){ok=false;break}}
+if(ok){
+for(let i=0;i<len;i++)grid[row][col+i]=w.word[i];
+wordPositions.push({word:w.word,row,col,dir,len,desc:w.desc});
+placed=true;
+}
+}else{
+const row=Math.floor(Math.random()*(SIZE-len+1));
+const col=Math.floor(Math.random()*SIZE);
+let ok=true;
+for(let i=0;i<len;i++){if(grid[row+i][col]!==''&&grid[row+i][col]!==w.word[i]){ok=false;break}}
+if(ok){
+for(let i=0;i<len;i++)grid[row+i][col]=w.word[i];
+wordPositions.push({word:w.word,row,col,dir,len,desc:w.desc});
+placed=true;
+}
+}
+}
+if(!placed)wordPositions.push({word:w.word,row:0,col:0,dir:'h',len:0,desc:w.desc,unplaced:true});
+});
+
+for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){if(grid[r][c]==='')grid[r][c]=fillPool[Math.floor(Math.random()*fillPool.length)]}
+}
+
+function renderAll(){
+foundWords=new Set();
+selectStart=null;
+generatePuzzle();
+renderWordList();
+renderGrid();
+s('found-count').textContent='0';
+s('found-flash').className='found-flash';
+}
+
+function renderWordList(){
+const list=s('word-list');
+list.innerHTML=wordPositions.map(wp=>{
+const cls=foundWords.has(wp.word)?'word-chip found':'word-chip';
+return`<span class="${cls}" title="${wp.desc}">${wp.word}${wp.unplaced?' ⚠️':''}</span>`;
+}).join('');
+}
+
+function renderGrid(){
+const table=s('grid-table');
+table.innerHTML='';
+for(let r=0;r<SIZE;r++){
+const tr=document.createElement('tr');
+for(let c=0;c<SIZE;c++){
+const td=document.createElement('td');
+td.textContent=grid[r][c];
+td.dataset.row=r;
+td.dataset.col=c;
+td.onclick=()=>cellClick(r,c);
+tr.appendChild(td);
+}
+table.appendChild(tr);
+}
+}
+
+function cellClick(r,c){
+if(!selectStart){
+selectStart={r,c};
+document.querySelectorAll('.grid-table td').forEach(td=>td.classList.remove('selected'));
+const td=getCell(r,c);if(td)td.classList.add('selected');
+}else{
+const sr=selectStart.r,sc=selectStart.c;
+if(sr===r||sc===c){
+const isH=sr===r;
+const minC=isH?Math.min(sc,c):sc;
+const maxC=isH?Math.max(sc,c):sc;
+const minR=isH?r:Math.min(sr,r);
+const maxR=isH?r:Math.max(sr,r);
+let word='';
+const cells=[];
+if(isH){for(let i=minC;i<=maxC;i++){word+=grid[sr][i];cells.push({r:sr,c:i})}}
+else{for(let i=minR;i<=maxR;i++){word+=grid[i][sc];cells.push({r:i,c:sc})}}
+const matched=wordPositions.find(wp=>wp.word===word&&!foundWords.has(wp.word));
+if(matched&&!matched.unplaced){
+foundWords.add(matched.word);
+cells.forEach(({r,c})=>{const td=getCell(r,c);if(td)td.classList.add('found')});
+s('found-count').textContent=foundWords.size;
+const flash=s('found-flash');
+s('found-word').textContent=matched.word;
+flash.className='found-flash show';
+setTimeout(()=>{flash.className='found-flash'},1500);
+renderWordList();
+if(foundWords.size===wordPositions.filter(wp=>!wp.unplaced).length){
+setTimeout(()=>{alert('🎉 恭喜！你找到了所有關鍵詞！')},500);
+}
+}
+}
+selectStart=null;
+document.querySelectorAll('.grid-table td').forEach(td=>td.classList.remove('selected'));
+}
+}
+
+function getCell(r,c){return document.querySelector(`.grid-table td[data-row="${r}"][data-col="${c}"]`)}
+
+function resetGame(){renderAll()}
+
+renderAll();
+</script>
+</body>
+</html>

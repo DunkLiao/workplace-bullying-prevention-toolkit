@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>幸運輪盤問答｜職場霸凌防治法規</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--wrong-bg:#fde8e8;--warn:#b45309;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.wheel-wrap{position:relative;width:280px;height:280px;margin:0 auto 24px}
+.wheel-canvas{width:100%;height:100%}
+.wheel-pointer{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:28px;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.spin-btn{display:block;width:200px;margin:0 auto 20px;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s}
+.spin-btn:hover:not(:disabled){background:var(--navy-light);transform:scale(1.03)}
+.spin-btn:disabled{opacity:.6;cursor:default}
+.question-box{background:var(--bg);border-radius:10px;padding:18px;margin-bottom:16px;text-align:center;font-size:16px;font-weight:700;line-height:1.7;border:2px solid var(--border);min-height:80px;display:flex;align-items:center;justify-content:center}
+.answer-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.answer-btn{padding:14px;border:2px solid var(--border);border-radius:10px;background:var(--bg);font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+.answer-btn:hover:not(:disabled){border-color:var(--navy-light);background:#eaf0f8}
+.answer-btn:disabled{cursor:default}
+.answer-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct)}
+.answer-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong)}
+.feedback-text{text-align:center;font-size:14px;line-height:1.7;padding:10px;border-radius:8px;display:none;margin-bottom:12px}
+.feedback-text.show{display:block}
+.feedback-text.correct{background:var(--correct-bg);color:var(--correct)}
+.feedback-text.wrong{background:var(--wrong-bg);color:var(--wrong)}
+.stats-row{display:flex;gap:12px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.stat-chip{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:13px}
+.stat-chip strong{color:var(--navy)}
+.btn-reset{width:100%;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:10px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:8px}
+.btn-reset:hover{background:#eef3fa}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.card{padding:20px 14px}.wheel-wrap{width:240px;height:240px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">🎡</div>
+<div><h1>幸運輪盤問答</h1><p>轉動輪盤——隨機選題，答對得分！</p></div>
+</div>
+
+<div class="card">
+<div class="wheel-wrap">
+<div class="wheel-pointer">▼</div>
+<canvas class="wheel-canvas" id="wheel" width="560" height="560"></canvas>
+</div>
+<button class="spin-btn" id="spin-btn" onclick="spin()">🎰 轉動輪盤</button>
+
+<div class="stats-row">
+<div class="stat-chip">🏆 得分：<strong id="total-score">0</strong></div>
+<div class="stat-chip">✅ 正確：<strong id="correct-count">0</strong></div>
+<div class="stat-chip">📝 已答：<strong id="answered-count">0</strong></div>
+</div>
+
+<div class="question-box" id="question-box">點擊「轉動輪盤」開始遊戲！</div>
+<div class="answer-btns" id="answer-btns"></div>
+<div class="feedback-text" id="feedback-text"></div>
+<button class="btn-reset" onclick="resetGame()">🔄 重新開始</button>
+</div>
+<p class="footer-note">依《職業安全衛生法》第二章之一設計</p>
+</div>
+
+<script>
+const CATEGORIES=[
+{name:"霸凌定義",color:"#1a3a5c",questions:[
+{q:"下列何者是職場霸凌的核心要件之一？",opts:["持續性不當行為","單次口頭提醒","合理績效考核","提供培訓機會"],ans:0,expl:"持續性的不當行為是職場霸凌的核心要件。正當的績效管理不構成霸凌。"},
+{q:"職場霸凌是否需要造成實際的身心健康危害？",opts:["是，須造成危害","不需要任何影響","僅需主觀不適","視公司規定"],ans:0,expl:"依 §22-1，職場霸凌須對勞工造成身心健康危害。"},
+]},
+{name:"雇主責任",color:"#2a5080",questions:[
+{q:"百人以上公司受理申訴後，須於幾日內組成調查小組？",opts:["15 個工作日","7 個工作日","30 個工作日","60 個工作日"],ans:0,expl:"準則規定百人以上事業單位須於受理申訴後 15 個工作日內組成調查小組，外聘不少於 1/2。"},
+{q:"雇主知悉霸凌但員工無意願申訴時，雇主應如何？",opts:["仍應採取適當措施","不須理會","等待員工改變心意","僅口頭提醒"],ans:0,expl:"§22-2 規定即使無申訴意願，雇主仍應採取適當措施並留存紀錄。"},
+]},
+{name:"申訴保護",color:"#c9a84c",questions:[
+{q:"雇主因員工提出申訴而將其調職，這是否合法？",opts:["不合法，違反不利對待禁止","合法，屬管理權限","須員工同意才合法","視調職原因而定"],ans:0,expl:"§22-4 不利對待禁止條款：雇主不得因員工提出申訴而施以調職等不利處分。"},
+{q:"申訴不成立時，申訴人是否會構成誣告？",opts:["只有惡意虛構才會","一定會被反告","視公司政策","由主管決定"],ans:0,expl:"僅「經調查證實惡意虛構」者才可能面臨懲戒。善意申訴受 §22-4 保護。"},
+]},
+{name:"防治措施",color:"#1e7e44",questions:[
+{q:"幾人以上的事業單位必須設置申訴管道？",opts:["10 人以上","30 人以上","100 人以上","5 人以上"],ans:0,expl:"準則規定十人以上事業單位即須設置申訴管道（電子信箱、專線等）。"},
+{q:"調查小組的外聘成員比例不得少於多少？",opts:["二分之一","三分之一","四分之一","全部外聘"],ans:0,expl:"百人以上事業單位的調查小組，外聘成員比例不得少於二分之一。"},
+]},
+{name:"最高負責人",color:"#b45309",questions:[
+{q:"若被申訴人為公司董事長，員工應向誰提出申訴？",opts:["地方主管機關","公司人資處","勞動部","警察局"],ans:0,expl:"若被申訴人為最高負責人，勞工得逕向地方主管機關提出申訴。"},
+{q:"地方主管機關受理最高負責人申訴後，須在幾日內通知是否受理？",opts:["10 個工作日","7 個工作日","30 個工作日","立即通知"],ans:0,expl:"地方主管機關須於 10 個工作日內通知是否受理。"},
+]},
+{name:"調查程序",color:"#6b21a8",questions:[
+{q:"調查報告完成期限為多久？",opts:["2 個月（可延 1 月）","1 個月","3 個月","6 個月"],ans:0,expl:"調查小組成立翌日起 2 個月內完成調查報告，必要時得延長 1 個月。"},
+{q:"申訴處理單位的性別比例規定為何？",opts:["任一性別不少於 1/3","全員同性別","男女各半","無特別規定"],ans:0,expl:"準則規定申訴處理單位成員至少三位，任一性別比例不得少於三分之一。"},
+]}
+];
+
+let totalScore=0,correctCount=0,answeredCount=0,spinning=false,currentQ=null,rotation=0;
+
+const canvas=document.getElementById('wheel');
+const ctx=canvas.getContext('2d');
+
+function drawWheel(rot){
+const cx=280,cy=280,r=260;
+ctx.clearRect(0,0,560,560);
+const n=CATEGORIES.length;
+const arc=Math.PI*2/n;
+CATEGORIES.forEach((cat,i)=>{
+const start=i*arc+rot-Math.PI/2;
+const end=start+arc;
+ctx.beginPath();
+ctx.moveTo(cx,cy);
+ctx.arc(cx,cy,r,start,end);
+ctx.fillStyle=cat.color;
+ctx.fill();
+ctx.strokeStyle='#fff';
+ctx.lineWidth=3;
+ctx.stroke();
+ctx.save();
+ctx.translate(cx,cy);
+ctx.rotate(start+arc/2);
+ctx.textAlign='center';
+ctx.fillStyle='#fff';
+ctx.font='bold 15px "Noto Sans TC","Microsoft JhengHei",sans-serif';
+ctx.fillText(cat.name,130,6);
+ctx.restore();
+});
+ctx.beginPath();
+ctx.arc(cx,cy,40,0,Math.PI*2);
+ctx.fillStyle='#fff';
+ctx.fill();
+ctx.fillStyle=CATEGORIES[0].color;
+ctx.font='bold 18px "Noto Sans TC","Microsoft JhengHei",sans-serif';
+ctx.textAlign='center';
+ctx.fillText('🎡',cx,cy+6);
+}
+
+function getCategory(){
+const n=CATEGORIES.length;
+const arc=Math.PI*2/n;
+const norm=(rotation%(Math.PI*2)+Math.PI*2)%(Math.PI*2);
+const idx=Math.floor(((Math.PI*2*1.5-norm)%(Math.PI*2))/arc);
+return CATEGORIES[(n-idx)%n];
+}
+
+function spin(){
+if(spinning)return;
+spinning=true;
+document.getElementById('spin-btn').disabled=true;
+document.getElementById('question-box').textContent='輪盤轉動中...';
+document.getElementById('answer-btns').innerHTML='';
+document.getElementById('feedback-text').className='feedback-text';
+
+const spins=5+Math.random()*5;
+const target=Math.PI*2*spins+Math.random()*Math.PI*2;
+const duration=3000;
+const startRot=rotation;
+const startTime=Date.now();
+
+function animate(){
+const elapsed=Date.now()-startTime;
+const progress=Math.min(elapsed/duration,1);
+const ease=1-Math.pow(1-progress,3);
+rotation=startRot+target*ease;
+drawWheel(rotation);
+if(progress<1){requestAnimationFrame(animate)}
+else{
+spinning=false;
+document.getElementById('spin-btn').disabled=false;
+const cat=getCategory();
+const qs=cat.questions;
+const q=qs[Math.floor(Math.random()*qs.length)];
+showQuestion(q,cat);
+}
+}
+requestAnimationFrame(animate);
+}
+
+function showQuestion(q,cat){
+currentQ=q;
+document.getElementById('question-box').innerHTML=`<span style="font-size:12px;color:var(--text-muted);display:block;margin-bottom:6px">📂 ${cat.name}</span>${q.q}`;
+const btns=document.getElementById('answer-btns');
+btns.innerHTML='';
+const letters=['A','B','C','D'];
+q.opts.forEach((opt,i)=>{
+const btn=document.createElement('button');
+btn.className='answer-btn';
+btn.textContent=`${letters[i]}. ${opt}`;
+btn.onclick=()=>selectAnswer(i);
+btns.appendChild(btn);
+});
+document.getElementById('feedback-text').className='feedback-text';
+}
+
+function selectAnswer(idx){
+if(!currentQ)return;
+answeredCount++;
+document.getElementById('answered-count').textContent=answeredCount;
+const correct=idx===currentQ.ans;
+if(correct){correctCount++;totalScore+=10}
+else{totalScore=Math.max(0,totalScore-3)}
+document.getElementById('correct-count').textContent=correctCount;
+document.getElementById('total-score').textContent=totalScore;
+const fb=document.getElementById('feedback-text');
+fb.className='feedback-text show '+(correct?'correct':'wrong');
+fb.innerHTML=correct?`✅ 答對了！+10 分<br><small>${currentQ.expl}</small>`:`❌ 答錯了！-3 分<br><small>正確答案：${currentQ.opts[currentQ.ans]}。${currentQ.expl}</small>`;
+document.querySelectorAll('.answer-btn').forEach((b,i)=>{
+b.disabled=true;
+if(i===currentQ.ans)b.classList.add('correct-ans');
+if(i===idx&&!correct)b.classList.add('wrong-ans');
+});
+currentQ=null;
+}
+
+function resetGame(){
+totalScore=0;correctCount=0;answeredCount=0;currentQ=null;
+document.getElementById('total-score').textContent='0';
+document.getElementById('correct-count').textContent='0';
+document.getElementById('answered-count').textContent='0';
+document.getElementById('question-box').textContent='點擊「轉動輪盤」開始遊戲！';
+document.getElementById('answer-btns').innerHTML='';
+document.getElementById('feedback-text').className='feedback-text';
+document.getElementById('spin-btn').disabled=false;
+}
+
+drawWheel(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>角色扮演決策樹｜職場霸凌防治</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--wrong-bg:#fde8e8;--warn:#b45309;--warn-bg:#fff7e6;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.path-indicator{display:flex;align-items:center;gap:6px;margin-bottom:18px;font-size:12px;color:var(--text-muted);flex-wrap:wrap}
+.path-dot{width:8px;height:8px;border-radius:50%;background:var(--navy-light)}
+.path-dot.active{background:var(--gold);width:12px;height:12px}
+.scene-box{background:var(--bg);border-left:4px solid var(--navy);border-radius:0 8px 8px 0;padding:16px 18px;margin-bottom:20px;font-size:15px;line-height:1.8}
+.scene-label{font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;margin-bottom:6px}
+.choices{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.choice-btn{padding:14px 18px;background:var(--bg);border:2px solid var(--border);border-radius:10px;text-align:left;font-size:15px;font-family:inherit;cursor:pointer;transition:all .2s;color:var(--text);line-height:1.5}
+.choice-btn:hover{border-color:var(--navy-light);background:#eaf0f8;transform:translateX(3px)}
+.choice-btn .choice-letter{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;text-align:center;line-height:26px;font-size:13px;font-weight:700;margin-right:10px}
+.outcome-box{border-radius:10px;padding:18px;margin-top:16px;display:none;animation:fadeIn .3s}
+.outcome-box.show{display:block}
+.outcome-box.good{background:var(--correct-bg);border:1.5px solid #6fcf97}
+.outcome-box.bad{background:var(--wrong-bg);border:1.5px solid #f6a0a0}
+.outcome-box.neutral{background:var(--warn-bg);border:1.5px solid #f6d073}
+.outcome-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.outcome-box.good .outcome-title{color:var(--correct)}
+.outcome-box.bad .outcome-title{color:var(--wrong)}
+.outcome-box.neutral .outcome-title{color:var(--warn)}
+.outcome-text{font-size:14px;line-height:1.7}
+.outcome-law{margin-top:10px;font-size:12px;color:var(--text-muted);font-style:italic}
+.btn-restart{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:16px}
+.btn-restart:hover{background:var(--navy-light)}
+.btn-next-scene{width:100%;background:var(--gold);color:var(--navy-dark);border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:12px;display:none}
+.btn-next-scene:hover{background:var(--gold-light)}
+.btn-next-scene.show{display:block}
+.welcome-icon{font-size:52px;text-align:center;margin-bottom:16px}
+.welcome-title{font-size:22px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:10px}
+.welcome-subtitle{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.7}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.info-item{background:var(--bg);border-radius:10px;padding:14px 10px;text-align:center;border:1px solid var(--border)}
+.info-item .info-num{font-size:26px;font-weight:800;color:var(--navy)}
+.info-item .info-label{font-size:12px;color:var(--text-muted);margin-top:2px}
+.btn-start{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-start:hover{background:var(--navy-light)}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+.screen{animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.summary-box{background:var(--bg);border-radius:10px;padding:16px;margin-bottom:16px;font-size:13px;line-height:1.8;border:1px solid var(--border)}
+@media(max-width:480px){.card{padding:20px 14px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">🎭</div>
+<div><h1>角色扮演決策樹</h1><p>你是劇中人——你的每個選擇都會影響結局</p></div>
+</div>
+
+<div id="screen-welcome" class="screen">
+<div class="card">
+<div class="welcome-icon">🎬</div>
+<h2 class="welcome-title">如果這發生在你身上…</h2>
+<p class="welcome-subtitle">你將扮演一位面臨職場困境的銀行行員，<br>每個決定將導向不同結果。<br>你的選擇——會保護自己，還是讓情況惡化？</p>
+<div class="info-grid">
+<div class="info-item"><div class="info-num">5</div><div class="info-label">場景關卡</div></div>
+<div class="info-item"><div class="info-num">2-3</div><div class="info-label">選擇分支</div></div>
+<div class="info-item"><div class="info-num">~5</div><div class="info-label">分鐘體驗</div></div>
+</div>
+<button class="btn-start" onclick="startGame()">開始扮演 →</button>
+</div>
+<p class="footer-note">本遊戲為教育訓練用途，不構成法律意見</p>
+</div>
+
+<div id="screen-game" class="screen" style="display:none">
+<div class="card">
+<div class="path-indicator" id="path-indicator"></div>
+<div class="scene-box">
+<div class="scene-label" id="scene-label">📍 場景</div>
+<div id="scene-content"></div>
+</div>
+<div class="choices" id="choices"></div>
+<div class="outcome-box" id="outcome"><div class="outcome-title" id="outcome-title"></div><div class="outcome-text" id="outcome-text"></div><div class="outcome-law" id="outcome-law"></div></div>
+<button class="btn-restart" id="btn-restart" onclick="resetGame()" style="display:none">🔄 重新體驗</button>
+<button class="btn-next-scene" id="btn-next" onclick="nextScene()">下一幕 →</button>
+</div>
+</div>
+
+<div id="screen-summary" class="screen" style="display:none">
+<div class="card">
+<div style="text-align:center;font-size:40px;margin-bottom:12px">📊</div>
+<h2 style="font-size:20px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:8px">體驗總結</h2>
+<p style="text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:20px" id="summary-score-text"></p>
+<div class="summary-box" id="summary-log"></div>
+<div class="outcome-box show neutral" id="final-advice-box"><div class="outcome-title">💡 關鍵提醒</div><div class="outcome-text" id="final-advice"></div></div>
+<button class="btn-restart" onclick="resetGame()">🔄 重新體驗</button>
+</div>
+<p class="footer-note">若遇職場霸凌，請撥 1925 安心專線或透過公司申訴管道反映</p>
+</div>
+</div>
+
+<script>
+const SCENES=[
+{
+id:"s1",
+label:"第一幕：新任務",
+content:"你（小芳）是○○銀行的行員。今天上午，王經理突然把你叫進辦公室，對你說：「月底前把這份全市場分析報告交出來。我知道正常需要兩個月，但公司現在需要你展現『團隊精神』。做不出來的話，年終考核你看著辦。」",
+choices:[
+{text:"默默接受，開始加班趕工",outcome:"bad",desc:"你連續一個月每天加班到深夜，但報告仍然無法達到品質要求。王經理在週會上公開羞辱你「不用心」。你身心俱疲，壓力大到失眠。",law:"不合理工作指派已構成職場霸凌（職安法 §22-1），默默承受不會改變處境。",next:"s2"},
+{text:"向經理說明實際困難，請求合理期限或資源支援",outcome:"neutral",desc:"王經理聽完後臉色不悅，但勉強同意延期兩週並指派一位同事協助。雖然氣氛尷尬，但你暫時避免了崩潰。",law:"合理溝通是你的權利，但若主管拒絕且持續施壓，應考慮申訴。",next:"s2a"},
+{text:"直接向人力資源處反映情況",outcome:"good",desc:"人資處了解情況後，啟動內部關懷機制，與王經理溝通調整工作分配，並將此事件記錄為潛在管理問題。",law:"雇主依 §22-2 有義務採取防治措施。及早反映有助於避免情況惡化。",next:"s3"}
+]
+},
+{
+id:"s2",
+label:"第二幕：變本加厲",
+content:"兩個月過去，王經理變本加厲。不僅持續指派超量工作，還開始在團隊群組中公開批評你「效率差、拖累團隊」，其他同事開始疏遠你。",
+choices:[
+{text:"繼續忍耐，希望情況會好轉",outcome:"bad",desc:"三個月後，你因壓力過大請了病假。回來後發現自己被調至檔案室做雜務，形同冷凍。",law:"持續性言語攻擊與孤立構成霸凌。忍耐不會讓霸凌者收手，只會讓傷害加深。",next:"end"},
+{text:"向公司正式提出申訴",outcome:"good",desc:"你依照公司程序提出正式申訴。公司成立調查小組，訪談相關同事後，確認王經理的行為構成職場霸凌，對其進行懲戒並調整你的工作環境。",law:"依準則規定，雇主受理申訴後須於 10 個工作日內決定是否受理，並依法調查處理。§22-4 保障你不受不利對待。",next:"s4"}
+]
+},
+{
+id:"s2a",
+label:"第二幕：新的困擾",
+content:"雖然工作壓力稍緩，但你發現王經理開始在會議中刻意跳過你的發言，重要郵件不再副本給你，你的意見不再被納入決策。",
+choices:[
+{text:"主動找王經理私下溝通，表達你的感受",outcome:"neutral",desc:"王經理表示「只是業務調整」，態度冷淡但行為略有收斂。你仍感到不安，不確定是否會再被針對。",law:"溝通是好的第一步，但若行為具持續性且有孤立意圖，仍可能構成霸凌。建議保留所有紀錄。",next:"end"},
+{text:"蒐集證據（郵件截圖、會議紀錄），向 HR 諮詢",outcome:"good",desc:"HR 專員告知你這屬於潛在的關係霸凌（排斥孤立），建議你先記錄所有事件，並提供 EAP 心理諮詢資源。",law:"準則第 3 條將「刻意排擠或冷落」列為霸凌樣態。保留證據有助後續調查。",next:"s3"}
+]
+},
+{
+id:"s3",
+label:"第三幕：同事的求助",
+content:"同部門的阿華私下找你，說他也被王經理長期欺壓，問你該怎麼辦。你想幫助他，但擔心自己也被牽連。",
+choices:[
+{text:"鼓勵阿華也向 HR 申訴，並表示願意作證",outcome:"good",desc:"你和阿華一起向 HR 反映，多人的證詞讓調查更具說服力。公司最終對王經理做出嚴厲處分。",law:"集體證詞有助於建立霸凌的系統性證據。§22-4 禁止雇主對申訴人及證人不利對待。",next:"end"},
+{text:"建議阿華忍耐，不要把事情鬧大",outcome:"bad",desc:"阿華聽從你的建議繼續忍耐，三個月後因憂鬱症請長假。你感到深深的內疚。",law:"默許霸凌持續是對受害者的二次傷害。每個人都可以成為改變的力量。",next:"end"},
+{text:"建議阿華撥打 1925 安心專線尋求專業諮詢",outcome:"good",desc:"阿華透過 1925 獲得心理支持與法規諮詢，釐清了自己的權利，勇敢地提出申訴。",law:"1925 安心專線提供 24 小時免費心理諮詢與法律轉介服務。",next:"end"}
+]
+},
+{
+id:"s4",
+label:"第四幕：申訴之後",
+content:"申訴成立後，你擔心回到工作崗位會遭受報復。你的主管換成了李經理，但王經理仍在公司內，有時會在走廊遇到。",
+choices:[
+{text:"低調工作，盡量避免與王經理接觸",outcome:"neutral",desc:"你小心翼翼地度過了幾個月，雖然相安無事，但心理陰影仍在。公司為你安排了 EAP 心理諮商。",law:"§22-4 不利對待禁止條款保護你不受報復。若發現任何報復跡象，應立即通報。",next:"end"},
+{text:"參加公司舉辦的心理復原工作坊，積極重建信心",outcome:"good",desc:"透過專業輔導與同儕支持，你逐漸走出陰影，甚至成為公司防霸凌宣導的種子講師，用自己的經驗幫助他人。",law:"雇主依 §22-2 有義務提供或轉介協助資源，包含心理諮商。",next:"end"}
+]
+}
+];
+
+let currentSceneIdx=0, sceneId="s1", history=[];
+
+function s(id){return document.getElementById(id)}
+function showScreen(id){['screen-welcome','screen-game','screen-summary'].forEach(x=>s(x).style.display='none');s(id).style.display='block';window.scrollTo(0,0)}
+
+function startGame(){currentSceneIdx=0;sceneId="s1";history=[];showScreen('screen-game');renderScene("s1")}
+
+function findScene(id){return SCENES.find(sc=>sc.id===id)}
+
+function renderScene(id){
+const scene=findScene(id);
+if(!scene)return showSummary();
+s('scene-label').textContent=scene.label;
+s('scene-content').textContent=scene.content;
+s('btn-next').className='btn-next-scene';
+s('btn-restart').style.display='none';
+const outcome=s('outcome');
+outcome.className='outcome-box';
+const choicesDiv=s('choices');
+choicesDiv.innerHTML='';
+const letters=['A','B','C'];
+scene.choices.forEach((ch,i)=>{
+const btn=document.createElement('button');
+btn.className='choice-btn';
+btn.innerHTML=`<span class="choice-letter">${letters[i]}</span>${ch.text}`;
+btn.onclick=()=>selectChoice(scene,i);
+choicesDiv.appendChild(btn);
+});
+updatePath();
+}
+
+function updatePath(){
+const div=s('path-indicator');
+const sceneOrder=["s1","s2","s3","s4"];
+const activeIdx=sceneOrder.indexOf(sceneId);
+div.innerHTML=sceneOrder.map((sid,i)=>{
+const sc=findScene(sid);if(!sc)return'';
+const cls=i===activeIdx?'active':'';
+return`<span class="path-dot ${cls}"></span><span style="${i===activeIdx?'color:var(--navy);font-weight:700':''}">${sc.label.split('：')[0]}</span>`;
+}).join(' → ');
+}
+
+function selectChoice(scene,choiceIdx){
+const ch=scene.choices[choiceIdx];
+history.push({scene:scene.label,choice:ch.text,outcome:ch.desc,law:ch.law,type:ch.outcome});
+const outcome=s('outcome'),title=s('outcome-title'),text=s('outcome-text'),law=s('outcome-law');
+outcome.className='outcome-box show '+ch.outcome;
+if(ch.outcome==='good'){title.textContent='✅ 這是好的選擇！'}
+else if(ch.outcome==='bad'){title.textContent='⚠️ 這個選擇可能讓情況惡化'}
+else{title.textContent='🤔 這個選擇有好有壞'}
+text.textContent=ch.desc;
+law.textContent='📖 '+ch.law;
+document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);
+s('btn-restart').style.display='block';
+if(ch.next==='end'){
+s('btn-next').className='btn-next-scene show';
+s('btn-next').textContent='查看體驗總結 →';
+}else{
+s('btn-next').className='btn-next-scene show';
+s('btn-next').textContent='下一幕 →';
+}
+sceneId=ch.next;
+}
+
+function nextScene(){
+s('outcome').className='outcome-box';
+if(sceneId==='end'){showSummary();return}
+renderScene(sceneId);
+}
+
+function showSummary(){
+showScreen('screen-summary');
+let good=0,bad=0,neutral=0;
+history.forEach(h=>{if(h.type==='good')good++;else if(h.type==='bad')bad++;else neutral++});
+const total=history.length;
+const ratio=good/total;
+s('summary-score-text').textContent=`你做了 ${total} 個選擇，其中 ${good} 個是好的選擇`;
+const log=s('summary-log');
+log.innerHTML='<strong>📋 你的選擇歷程：</strong><br><br>'+history.map((h,i)=>{
+const icon=h.type==='good'?'✅':h.type==='bad'?'⚠️':'🤔';
+return`${icon} <strong>${h.scene}</strong>：選擇「${h.choice}」<br><span style="color:var(--text-muted);font-size:12px;">${h.outcome}</span>`;
+}).join('<br><br>');
+let advice;
+if(ratio>=0.8)advice='你做對了大多數選擇，展現了良好的判斷力與自我保護意識。請將這些知識分享給同事。';
+else if(ratio>=0.5)advice='你有一些好的選擇，但部分情況下的猶豫可能讓情況惡化。記住：及早反映、保留證據、尋求協助是最好的策略。';
+else advice='你的選擇傾向於「忍耐」，這在職場霸凌中是最危險的應對方式。霸凌不會自動停止——勇敢發聲，法律會保護你。';
+s('final-advice').textContent=advice;
+}
+
+function resetGame(){startGame()}
+</script>
+</body>
+</html>

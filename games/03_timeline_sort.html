@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>申訴時間線排序｜職場霸凌防治</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--wrong-bg:#fde8e8;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.sort-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.sort-item{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--bg);border:2px solid var(--border);border-radius:10px;cursor:grab;transition:all .2s;user-select:none}
+.sort-item:hover{border-color:var(--navy-light);background:#eaf0f8}
+.sort-item:active{cursor:grabbing}
+.sort-item.dragging{opacity:.5;border-style:dashed}
+.sort-item .sort-num{width:30px;height:30px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.sort-item .sort-content{flex:1}
+.sort-item .sort-content .step-name{font-weight:700;font-size:14px;color:var(--navy-dark)}
+.sort-item .sort-content .step-deadline{font-size:12px;color:var(--text-muted);margin-top:2px}
+.sort-item .sort-arrows{display:flex;flex-direction:column;gap:2px}
+.sort-item .sort-arrows button{width:24px;height:24px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.sort-item .sort-arrows button:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sort-item.correct-pos{border-color:var(--correct);background:var(--correct-bg)}
+.sort-item.wrong-pos{border-color:var(--wrong);background:var(--wrong-bg)}
+.btn-check{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;margin-bottom:12px}
+.btn-check:hover{background:var(--navy-light)}
+.btn-check:disabled{opacity:.5;cursor:default}
+.feedback-box{border-radius:10px;padding:16px;display:none;margin-bottom:16px}
+.feedback-box.show{display:block}
+.feedback-box.correct{background:var(--correct-bg);border:1.5px solid #6fcf97}
+.feedback-box.wrong{background:var(--wrong-bg);border:1.5px solid #f6a0a0}
+.feedback-box.partial{background:#fff7e6;border:1.5px solid #f6d073}
+.feedback-title{font-size:15px;font-weight:700;margin-bottom:8px}
+.feedback-box.correct .feedback-title{color:var(--correct)}
+.feedback-box.wrong .feedback-title{color:var(--wrong)}
+.feedback-detail{font-size:13px;line-height:1.7}
+.btn-reset{width:100%;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:10px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-reset:hover{background:#eef3fa}
+.welcome-icon{font-size:52px;text-align:center;margin-bottom:16px}
+.welcome-title{font-size:22px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:10px}
+.welcome-subtitle{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.7}
+.btn-start{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-start:hover{background:var(--navy-light)}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+.screen{animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.card{padding:20px 14px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">📅</div>
+<div><h1>申訴時間線排序</h1><p>將申訴處理步驟按正確時間順序排列</p></div>
+</div>
+
+<div id="screen-welcome" class="screen">
+<div class="card">
+<div class="welcome-icon">⏱️</div>
+<h2 class="welcome-title">申訴流程你了解嗎？</h2>
+<p class="welcome-subtitle">職場霸凌申訴處理有嚴格的法定期限！<br>將 8 個步驟拖曳排列為正確的時間順序。</p>
+<button class="btn-start" onclick="startGame()">開始排序 →</button>
+</div>
+<p class="footer-note">依《職業安全衛生法》§22-2、§22-3 及《職場霸凌防治措施準則》設計</p>
+</div>
+
+<div id="screen-game" class="screen" style="display:none">
+<div class="card">
+<p style="font-size:14px;color:var(--text-muted);margin-bottom:16px">📌 將下方步驟<strong>由上到下</strong>排列為正確的時間順序（可用拖曳或 ↑↓ 按鈕）</p>
+<div class="sort-list" id="sort-list"></div>
+<button class="btn-check" id="btn-check" onclick="checkOrder()">✅ 檢查順序</button>
+<div class="feedback-box" id="fb"><div class="feedback-title" id="fb-title"></div><div class="feedback-detail" id="fb-detail"></div></div>
+<button class="btn-reset" onclick="resetGame()">🔄 重新隨機排列</button>
+</div>
+</div>
+</div>
+
+<script>
+const STEPS=[
+{name:"接獲申訴",deadline:"受理判定：10 個工作日",desc:"收到申訴後，須於 10 個工作日內判定是否受理，並書面通知申訴人。"},
+{name:"登錄勞動部系統",deadline:"登錄期限：受理翌日起 7 個工作日",desc:"受理申訴後，須於 7 個工作日內登錄勞動部職場霸凌通報系統。"},
+{name:"組成調查小組",deadline:"組成期限：受理後 15 個工作日（100 人以上）",desc:"百人以上事業單位須於受理申訴後 15 個工作日內組成調查小組，外聘成員不少於 1/2。"},
+{name:"完成調查報告",deadline:"調查期限：小組成立翌日起 2 個月（可延 1 月）",desc:"調查小組成立後，須於 2 個月內完成調查報告，必要時得延長 1 個月。"},
+{name:"申訴成立與否決定",deadline:"決定期限：報告完成日起 1 個月",desc:"調查報告完成後，須於 1 個月內作成申訴成立或不成立之決定。"},
+{name:"書面通知並登錄結果",deadline:"通知期限：決定日起 10 個工作日",desc:"作成決定後，須於 10 個工作日內書面通知當事人，並登錄結果。"},
+{name:"申復審議",deadline:"申復期限：收到決定翌日起 30 日（一次為限）",desc:"當事人不服決定，得於收到翌日起 30 日內提起申復，以一次為限。雇主須於 10 個工作日內召開申復審議會議。"},
+{name:"紀錄保存",deadline:"保存期限：結案日起 3 年",desc:"申訴案件結案後，相關紀錄須至少保存 3 年。"}
+];
+
+let order=[];
+
+function s(id){return document.getElementById(id)}
+function showScreen(id){['screen-welcome','screen-game'].forEach(x=>s(x).style.display='none');s(id).style.display='block';window.scrollTo(0,0)}
+
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function startGame(){
+order=shuffle([0,1,2,3,4,5,6,7]);
+showScreen('screen-game');
+s('fb').className='feedback-box';
+renderList();
+}
+
+function renderList(){
+const list=s('sort-list');
+list.innerHTML='';
+order.forEach((stepIdx,pos)=>{
+const st=STEPS[stepIdx];
+const div=document.createElement('div');
+div.className='sort-item';
+div.draggable=true;
+div.dataset.pos=pos;
+div.dataset.step=stepIdx;
+div.innerHTML=`
+<div class="sort-num">${pos+1}</div>
+<div class="sort-content"><div class="step-name">${st.name}</div><div class="step-deadline">⏱ ${st.deadline}</div></div>
+<div class="sort-arrows">
+<button onclick="moveUp(${pos})" title="上移">▲</button>
+<button onclick="moveDown(${pos})" title="下移">▼</button>
+</div>`;
+div.ondragstart=e=>{e.dataTransfer.setData('text/plain',pos);div.classList.add('dragging')};
+div.ondragend=()=>div.classList.remove('dragging');
+div.ondragover=e=>e.preventDefault();
+div.ondrop=e=>{
+e.preventDefault();
+const from=parseInt(e.dataTransfer.getData('text/plain'));
+const to=pos;
+if(from!==to){const tmp=order.splice(from,1)[0];order.splice(to,0,tmp);renderList()}
+};
+list.appendChild(div);
+});
+}
+
+function moveUp(pos){if(pos>0){[order[pos],order[pos-1]]=[order[pos-1],order[pos]];renderList()}}
+function moveDown(pos){if(pos<order.length-1){[order[pos],order[pos+1]]=[order[pos+1],order[pos]];renderList()}}
+
+function checkOrder(){
+let correct=0;
+order.forEach((stepIdx,pos)=>{if(stepIdx===pos)correct++});
+const fb=s('fb'),title=s('fb-title'),detail=s('fb-detail');
+fb.className='feedback-box show';
+if(correct===8){
+fb.classList.add('correct');
+title.textContent='🎉 全部正確！';
+detail.innerHTML='你完全掌握了職場霸凌申訴處理的法定期限流程！';
+}else if(correct>=6){
+fb.classList.add('partial');
+title.textContent=`⚠️ 答對 ${correct}/8，接近完美`;
+detail.innerHTML='以下為正確順序：<br>'+STEPS.map((s,i)=>`<strong>${i+1}.</strong> ${s.name}（${s.deadline}）`).join('<br>');
+}else{
+fb.classList.add('wrong');
+title.textContent=`❌ 答對 ${correct}/8，還需加強`;
+detail.innerHTML='正確順序如下：<br>'+STEPS.map((s,i)=>`<strong>${i+1}.</strong> ${s.name}（${s.deadline}）<br><span style="color:var(--text-muted)">${s.desc}</span>`).join('<br><br>');
+}
+s('btn-check').disabled=true;
+document.querySelectorAll('.sort-item').forEach(el=>el.draggable=false);
+}
+
+function resetGame(){
+s('btn-check').disabled=false;
+startGame();
+}
+</script>
+</body>
+</html>

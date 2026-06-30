@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>情境建構器｜職場霸凌構成要件分析</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--wrong-bg:#fde8e8;--warn:#b45309;--warn-bg:#fff7e6;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.verdict-area{text-align:center;padding:24px 16px;border-radius:12px;margin-bottom:20px;transition:all .4s}
+.verdict-icon{font-size:48px;margin-bottom:8px}
+.verdict-text{font-size:20px;font-weight:800;margin-bottom:4px}
+.verdict-detail{font-size:13px;line-height:1.6}
+.verdict-area.safe{background:#e6f9ed;border:2px solid #6fcf97}
+.verdict-area.safe .verdict-text{color:var(--correct)}
+.verdict-area.bully{background:#fde8e8;border:2px solid #f6a0a0}
+.verdict-area.bully .verdict-text{color:var(--wrong)}
+.verdict-area.maybe{background:#fff7e6;border:2px solid #f6d073}
+.verdict-area.maybe .verdict-text{color:var(--warn)}
+.factors{margin-bottom:20px}
+.factor-item{margin-bottom:18px}
+.factor-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.factor-name{font-weight:700;font-size:14px;color:var(--navy-dark)}
+.factor-value{font-size:13px;font-weight:600}
+.factor-desc{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.slider-wrap{position:relative}
+input[type=range]{-webkit-appearance:none;width:100%;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--correct) 0%,var(--gold) 50%,var(--wrong) 100%);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:#fff;border:3px solid var(--navy);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+input[type=range]::-webkit-slider-thumb:hover{border-color:var(--gold)}
+.slider-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px}
+.scenario-desc{background:var(--bg);border-radius:10px;padding:16px;font-size:14px;line-height:1.8;margin-bottom:16px;border:1px solid var(--border);min-height:60px}
+.info-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.info-card{background:var(--bg);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;border:1px solid var(--border)}
+.info-card strong{color:var(--navy-dark)}
+.btn-random{width:100%;background:var(--gold);color:var(--navy-dark);border:none;border-radius:10px;padding:14px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-random:hover{background:var(--gold-light)}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+@media(max-width:480px){.card{padding:20px 14px}.info-cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">🔬</div>
+<div><h1>情境建構器</h1><p>拖曳滑桿——即時分析是否構成職場霸凌</p></div>
+</div>
+
+<div class="card">
+<div class="verdict-area safe" id="verdict-area">
+<div class="verdict-icon" id="verdict-icon">✅</div>
+<div class="verdict-text" id="verdict-text">不構成霸凌</div>
+<div class="verdict-detail" id="verdict-detail">調整下方因子，觀察判斷結果如何變化</div>
+</div>
+
+<div class="scenario-desc" id="scenario-desc">你正在分析一個職場情境。調整滑桿來模擬不同程度的不當行為。</div>
+
+<div class="factors">
+<div class="factor-item">
+<div class="factor-header"><span class="factor-name">📅 持續性</span><span class="factor-value" id="val-persistence">單次事件</span></div>
+<div class="factor-desc">行為是一次性還是反覆發生？多久發生一次？</div>
+<input type="range" min="0" max="4" value="0" id="slider-persistence" oninput="updateAll()">
+<div class="slider-labels"><span>單次</span><span>數次</span><span>經常</span><span>長期</span><span>持續數月</span></div>
+</div>
+<div class="factor-item">
+<div class="factor-header"><span class="factor-name">⚡ 行為嚴重度</span><span class="factor-value" id="val-severity">輕微</span></div>
+<div class="factor-desc">行為是否包含侮辱、威脅、歧視等？對人格尊嚴的侵害程度？</div>
+<input type="range" min="0" max="4" value="0" id="slider-severity" oninput="updateAll()">
+<div class="slider-labels"><span>輕微</span><span>不禮貌</span><span>侮辱性</span><span>威脅性</span><span>嚴重侵害</span></div>
+</div>
+<div class="factor-item">
+<div class="factor-header"><span class="factor-name">👥 權力關係</span><span class="factor-value" id="val-power">對等同事</span></div>
+<div class="factor-desc">行為人與受害者的職務關係？是否利用權勢？</div>
+<input type="range" min="0" max="3" value="0" id="slider-power" oninput="updateAll()">
+<div class="slider-labels"><span>對等同事</span><span>資深員工</span><span>直屬主管</span><span>高階主管</span></div>
+</div>
+<div class="factor-item">
+<div class="factor-header"><span class="factor-name">💔 傷害程度</span><span class="factor-value" id="val-harm">無明顯影響</span></div>
+<div class="factor-desc">對受害者造成的身心影響？</div>
+<input type="range" min="0" max="4" value="0" id="slider-harm" oninput="updateAll()">
+<div class="slider-labels"><span>無影響</span><span>輕微不適</span><span>焦慮壓力</span><span>身心症狀</span><span>嚴重創傷</span></div>
+</div>
+</div>
+
+<div class="info-cards">
+<div class="info-card"><strong>💡 霸凌核心要件</strong><br>1. 職場關係<br>2. 逾越業務合理範圍<br>3. 不當言行<br>4. 持續性或情節重大<br>5. 造成身心危害</div>
+<div class="info-card"><strong>📖 法規依據</strong><br>《職業安全衛生法》§22-1<br>《職場霸凌防治措施準則》第 3 條<br>情節重大者不以持續為必要</div>
+</div>
+
+<button class="btn-random" onclick="randomScenario()">🎲 隨機情境</button>
+</div>
+<p class="footer-note">本工具僅供教育參考，實際個案判斷須綜合審酌各項因素</p>
+</div>
+
+<script>
+const persistenceLabels=['單次事件','偶發數次','頻繁發生（每週）','長期持續','持續數月以上'];
+const severityLabels=['輕微不當','態度不佳','侮辱性言語','威脅恐嚇','嚴重人身攻擊'];
+const powerLabels=['對等同事','資深同事','直屬主管','高階主管/雇主'];
+const harmLabels=['無明顯影響','輕微心理不適','明顯焦慮壓力','身心症狀（失眠等）','嚴重心理創傷'];
+
+function updateAll(){
+const p=parseInt(document.getElementById('slider-persistence').value);
+const s=parseInt(document.getElementById('slider-severity').value);
+const pw=parseInt(document.getElementById('slider-power').value);
+const h=parseInt(document.getElementById('slider-harm').value);
+
+document.getElementById('val-persistence').textContent=persistenceLabels[p];
+document.getElementById('val-severity').textContent=severityLabels[s];
+document.getElementById('val-power').textContent=powerLabels[pw];
+document.getElementById('val-harm').textContent=harmLabels[h];
+
+const area=document.getElementById('verdict-area');
+const icon=document.getElementById('verdict-icon');
+const text=document.getElementById('verdict-text');
+const detail=document.getElementById('verdict-detail');
+const desc=document.getElementById('scenario-desc');
+
+const total=s+p+pw+h;
+let verdict,verdictClass,verdictIcon,verdictDetail,scenarioDesc;
+
+if(total<=3){
+verdict='不構成霸凌';verdictClass='safe';verdictIcon='✅';
+verdictDetail='目前因子綜合判斷下，較可能屬於一般職場摩擦或正當管理行為。';
+scenarioDesc='這看起來是一般職場互動中的小摩擦或正當管理行為。行為輕微、非持續性、無明顯權力濫用或傷害，不達霸凌門檻。';
+}else if(total<=6){
+verdict='接近灰色地帶';verdictClass='maybe';verdictIcon='⚠️';
+verdictDetail='部分因子顯示潛在風險，可能需要進一步觀察與確認。建議記錄事件並關注後續發展。';
+scenarioDesc='此情境處於灰色地帶。某些因子（如權力不對等、不當言行）已出現，但可能尚未達到「持續且系統性」的霸凌門檻。建議當事人記錄事件、尋求 EAP 協助，若情況惡化應提出申訴。';
+}else if(total<=9){
+verdict='可能構成霸凌';verdictClass='maybe';verdictIcon='⚠️';
+verdictDetail='多項因子達到警戒水準，強烈建議啟動調查程序以確認是否構成霸凌。';
+scenarioDesc='此情境具有多項霸凌指標：不當行為的嚴重度、持續性或權力濫用情況已達值得關注的程度。建議當事人提出申訴，雇主應啟動調查程序。';
+}else{
+verdict='高度可能構成霸凌';verdictClass='bully';verdictIcon='🚫';
+verdictDetail='綜合判斷下，此行為高度可能構成職場霸凌。請立即依申訴程序處理，保護受害者權益。';
+scenarioDesc='此情境具備職場霸凌的典型特徵：持續性不當行為、權力濫用、嚴重侵害人格尊嚴或造成身心危害。雇主應依 §22-2 立即採取有效措施，包括隔離當事人、啟動調查、提供受害人協助資源。';
+}
+
+area.className='verdict-area '+verdictClass;
+icon.textContent=verdictIcon;
+text.textContent=verdict;
+detail.textContent=verdictDetail;
+desc.textContent=scenarioDesc;
+}
+
+function randomScenario(){
+const sliders=[
+document.getElementById('slider-persistence'),
+document.getElementById('slider-severity'),
+document.getElementById('slider-power'),
+document.getElementById('slider-harm')
+];
+sliders.forEach(s=>{
+s.value=Math.floor(Math.random()*(parseInt(s.max)+1));
+});
+updateAll();
+
+const total=parseInt(sliders[0].value)+parseInt(sliders[1].value)+parseInt(sliders[2].value)+parseInt(sliders[3].value);
+if(total<=3){
+setTimeout(()=>{alert('💡 這個隨機情境屬於「不構成霸凌」。試著拉高滑桿看看判斷如何改變！')},300);
+}
+}
+
+updateAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>申訴流程模擬器｜職場霸凌防治</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card-bg:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--warn:#b45309;--warn-bg:#fff7e6;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.timeline{position:relative;padding-left:32px;margin-bottom:20px}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:3px;background:var(--border);border-radius:2px}
+.timeline-step{position:relative;margin-bottom:20px;padding:16px 18px;background:var(--bg);border-radius:10px;border:2px solid var(--border);transition:all .4s;cursor:default}
+.timeline-step.completed{border-color:var(--correct);background:var(--correct-bg)}
+.timeline-step.active{border-color:var(--navy);background:#eaf0f8;box-shadow:0 0 0 3px rgba(26,58,92,.1)}
+.timeline-step .step-dot{position:absolute;left:-28px;top:18px;width:16px;height:16px;border-radius:50%;background:var(--border);border:3px solid var(--bg);z-index:1}
+.timeline-step.completed .step-dot{background:var(--correct);border-color:var(--correct-bg)}
+.timeline-step.active .step-dot{background:var(--navy);border-color:#eaf0f8;animation:pulse-dot 1.5s infinite}
+@keyframes pulse-dot{50%{box-shadow:0 0 0 8px rgba(26,58,92,.15)}}
+.step-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.step-title{font-weight:700;font-size:14px;color:var(--navy-dark)}
+.step-deadline{font-size:11px;color:var(--text-muted);background:var(--border);padding:2px 8px;border-radius:99px;white-space:nowrap}
+.step-desc{font-size:13px;color:var(--text-muted);line-height:1.6;display:none}
+.timeline-step.active .step-desc,.timeline-step.completed .step-desc{display:block}
+.step-detail-box{background:var(--card-bg);border-radius:10px;padding:18px;margin-bottom:16px;border:2px solid var(--navy);animation:fadeIn .3s}
+.detail-title{font-size:15px;font-weight:700;color:var(--navy-dark);margin-bottom:8px}
+.detail-text{font-size:14px;line-height:1.8;color:var(--text)}
+.detail-note{font-size:12px;color:var(--text-muted);margin-top:8px;font-style:italic}
+.progress-bar{margin-bottom:20px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.progress-bar-bg{background:var(--border);border-radius:99px;height:7px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--navy-light),var(--gold));border-radius:99px;transition:width .4s}
+.btn-nav{display:flex;gap:10px}
+.btn-next-step{flex:1;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-next-step:hover:not(:disabled){background:var(--navy-light)}
+.btn-next-step:disabled{opacity:.5;cursor:default}
+.btn-prev-step{flex:1;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-prev-step:hover{background:#eef3fa}
+.btn-reset{width:100%;background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:10px;padding:12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:12px}
+.btn-reset:hover{background:#eef3fa}
+.welcome-icon{font-size:52px;text-align:center;margin-bottom:16px}
+.welcome-title{font-size:22px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:10px}
+.welcome-subtitle{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.7}
+.btn-start{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-start:hover{background:var(--navy-light)}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+.screen{animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.card{padding:18px 12px}.timeline{padding-left:24px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">📋</div>
+<div><h1>申訴流程模擬器</h1><p>一步步走完職場霸凌申訴處理的完整流程</p></div>
+</div>
+
+<div id="screen-welcome" class="screen">
+<div class="card">
+<div class="welcome-icon">🗺️</div>
+<h2 class="welcome-title">申訴流程全體驗</h2>
+<p class="welcome-subtitle">從發現霸凌到結案，完整走過每一個法定程序。<br>點擊每一步驟，了解法定期限與注意事項。</p>
+<button class="btn-start" onclick="startGame()">開始模擬 →</button>
+</div>
+<p class="footer-note">依《職業安全衛生法》§22-2、§22-3、§22-4 及《職場霸凌防治措施準則》設計</p>
+</div>
+
+<div id="screen-game" class="screen" style="display:none">
+<div class="card">
+<div class="progress-bar">
+<div class="progress-label"><span id="prog-label">進度</span><span id="prog-pct">0 / 10 步驟</span></div>
+<div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+
+<div class="timeline" id="timeline"></div>
+
+<div id="detail-box" style="display:none">
+<div class="step-detail-box">
+<div class="detail-title" id="detail-title"></div>
+<div class="detail-text" id="detail-text"></div>
+<div class="detail-note" id="detail-note"></div>
+</div>
+</div>
+
+<div class="btn-nav">
+<button class="btn-prev-step" id="btn-prev" onclick="prevStep()" disabled>← 上一步</button>
+<button class="btn-next-step" id="btn-next" onclick="nextStep()">下一步 →</button>
+</div>
+<button class="btn-reset" onclick="resetGame()">🔄 重新模擬</button>
+</div>
+</div>
+</div>
+
+<script>
+const STEPS=[
+{title:"發現或知悉霸凌",deadline:"—",desc:"雇主因申訴或其他管道知悉職場霸凌事件。即使無正式申訴，雇主知悉後仍有義務採取行動。",detail:"無論是受害人親自申訴、同事舉報、主管觀察或任何管道，雇主一旦知悉可能的職場霸凌事件，就觸發了法定的防治義務鏈。",note:"📖 職安法 §22-2：雇主對勞工執行職務因他人行為遭受身體或精神不法侵害，應採取預防及處理措施。"},
+{title:"採取立即有效措施",deadline:"立即",desc:"考量申訴人意願，採取隔離、調整工作等避免再發措施，並不得對申訴人施以不利對待。",detail:"立即措施包括：調整雙方工作區域、暫緩直接隸屬關係、提供安全的工作環境。如申訴人意願，可先進行協調。",note:"📖 §22-2：雇主應考量申訴人意願，採取隔離等避免再發措施。§22-4：不得因申訴而為不利對待。"},
+{title:"受理判定與書面通知",deadline:"接獲申訴起 10 個工作日",desc:"申訴處理單位須判定是否受理，並書面通知申訴人。不受理須敘明理由。",detail:"不受理事由包括：非職場霸凌事項、無具體內容、身分資訊不足、同一事件已處理、已撤回、逾申訴期限（行為終了起三年）。",note:"📖 準則第 8 條：申訴處理單位應於接獲申訴之次日起 10 個工作日內，決定是否受理。"},
+{title:"登錄勞動部系統",deadline:"受理翌日起 7 個工作日",desc:"受理申訴後，須於期限內登錄勞動部職場霸凌通報系統。",detail:"事業單位應將受理之職場霸凌申訴案件登錄於勞動部指定之資訊系統。此為法定通報義務。",note:"📖 準則第 10 條：雇主應於受理申訴之次日起 7 個工作日內登錄。"},
+{title:"組成調查小組",deadline:"受理後 15 個工作日（百人以上）",desc:"百人以上事業單位須組成調查小組，外聘專業人士不少於二分之一。",detail:"調查小組應客觀、公正、公平進行調查。成員須遵守利益迴避原則：與當事人有親屬關係、共同權利義務關係者不得參與。",note:"📖 準則第 11 條：一百人以上事業單位應於受理申訴後 15 個工作日內組成調查小組。"},
+{title:"進行調查",deadline:"—",desc:"訪談當事人及相關人員、查驗物證與文件。調查過程不公開，保護當事人隱私。",detail:"調查方式包括：訪談申訴人、被申訴人及相關證人；查驗書面紀錄、電子郵件、通訊軟體紀錄等物證；必要時尋求外部專業協助。調查應製作完整筆錄。",note:"📖 準則第 12 條：調查不公開，相關人員身分資料應保密。"},
+{title:"完成調查報告",deadline:"小組成立翌日起 2 個月（可延 1 月）",desc:"調查小組應完成書面調查報告，載明事實、證據、分析及建議。",detail:"調查報告應包含：事件經過、訪談紀錄摘要、證據分析、認定理由、處理建議。必要時得延長一個月。",note:"📖 準則第 13 條：調查小組應於成立翌日起 2 個月內完成調查報告。"},
+{title:"申訴成立與否決定",deadline:"報告完成日起 1 個月",desc:"申訴處理單位審議調查報告，作成申訴成立或不成立之決定。",detail:"審議重點：行為是否構成職場霸凌、是否逾越業務合理範圍、是否具持續性或情節重大、是否造成身心健康危害。",note:"📖 準則第 14 條：申訴處理單位應於調查報告完成後 1 個月內作成決定。"},
+{title:"書面通知並登錄結果",deadline:"決定日起 10 個工作日",desc:"將決定以書面通知申訴人及被申訴人，載明事實與理由，並登錄結果。",detail:"書面通知應包含：申訴要旨、調查結果、事實認定、決定理由、申復權益告知。同時須登錄勞動部系統。",note:"📖 準則第 14 條：應於決定後 10 個工作日內書面通知當事人。"},
+{title:"申復與紀錄保存",deadline:"申復 30 日內 / 保存 3 年",desc:"當事人不服得於收到翌日起 30 日內提起申復（一次為限）。案件結案後紀錄至少保存 3 年。",detail:"申復審議會議應於接獲申復後 10 個工作日內召開。若程序有重大瑕疵或主管機關要求，雇主應進行重新調查。",note:"📖 準則第 16-18 條：申復一次為限，紀錄保存至少 3 年。"}
+];
+
+let currentStep=-1;
+
+function s(id){return document.getElementById(id)}
+function showScreen(id){['screen-welcome','screen-game'].forEach(x=>s(x).style.display='none');s(id).style.display='block';window.scrollTo(0,0)}
+
+function startGame(){currentStep=-1;showScreen('screen-game');renderTimeline();updateNav();showDetail(-1)}
+
+function renderTimeline(){
+const tl=s('timeline');
+tl.innerHTML=STEPS.map((st,i)=>{
+let cls='timeline-step';
+if(i<currentStep)cls+=' completed';
+if(i===currentStep)cls+=' active';
+return`<div class="${cls}" onclick="goToStep(${i})">
+<div class="step-dot"></div>
+<div class="step-header"><span class="step-title">${i+1}. ${st.title}</span><span class="step-deadline">⏱ ${st.deadline}</span></div>
+<div class="step-desc">${st.desc}</div>
+</div>`;
+}).join('');
+}
+
+function showDetail(idx){
+const box=s('detail-box');
+if(idx<0||idx>=STEPS.length){box.style.display='none';return}
+box.style.display='block';
+s('detail-title').textContent=`${idx+1}. ${STEPS[idx].title}`;
+s('detail-text').textContent=STEPS[idx].detail;
+s('detail-note').textContent=STEPS[idx].note;
+}
+
+function goToStep(idx){currentStep=idx;renderTimeline();updateNav();showDetail(idx)}
+
+function nextStep(){
+if(currentStep<STEPS.length-1){currentStep++;renderTimeline();updateNav();showDetail(currentStep)}
+}
+
+function prevStep(){if(currentStep>0){currentStep--;renderTimeline();updateNav();showDetail(currentStep)}}
+
+function updateNav(){
+s('btn-prev').disabled=currentStep<=0;
+s('btn-next').textContent=currentStep>=STEPS.length-1?'✅ 完成模擬':'下一步 →';
+s('prog-label').textContent=currentStep>=0?`步驟 ${currentStep+1}：${STEPS[currentStep].title}`:'點擊「下一步」開始模擬';
+s('prog-pct').textContent=`${Math.max(0,currentStep+1)} / ${STEPS.length} 步驟`;
+s('prog-fill').style.width=`${((Math.max(0,currentStep+1))/STEPS.length)*100}%`;
+}
+
+function resetGame(){startGame()}
+</script>
+</body>
+</html>

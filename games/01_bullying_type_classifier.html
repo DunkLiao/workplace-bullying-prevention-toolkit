@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>霸凌型態分類挑戰｜職場霸凌防治</title>
+<style>
+:root{--navy:#1a3a5c;--navy-dark:#122a44;--navy-light:#2a5080;--gold:#c9a84c;--gold-light:#f0d080;--bg:#f4f7fb;--card:#fff;--text:#1e2a38;--text-muted:#5a6a7a;--border:#d0dce8;--correct:#1e7e44;--correct-bg:#e6f9ed;--wrong:#b91c1c;--wrong-bg:#fde8e8;--warn:#b45309;--warn-bg:#fff7e6;--radius:12px;--shadow:0 4px 20px rgba(26,58,92,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px 48px}
+.container{width:100%;max-width:720px}
+.game-header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.game-header .logo-badge{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.game-header h1{font-size:17px;color:var(--navy);font-weight:700;line-height:1.35}
+.game-header p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;border:1px solid var(--border)}
+.progress-wrap{margin-bottom:20px}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.progress-bar-bg{background:var(--border);border-radius:99px;height:7px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--navy-light),var(--gold));border-radius:99px;transition:width .4s}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;margin-bottom:14px}
+.tag-classify{background:#e8eef6;color:var(--navy)}
+.scenario-card{background:var(--bg);border-radius:10px;padding:18px;margin-bottom:20px;border:2px dashed var(--border);text-align:center;font-size:15px;line-height:1.8;min-height:80px;display:flex;align-items:center;justify-content:center;transition:border-color .3s}
+.scenario-card.flash-correct{border-color:var(--correct);background:var(--correct-bg)}
+.scenario-card.flash-wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.scenario-card.flash-partial{border-color:var(--warn);background:var(--warn-bg)}
+.classify-btns{display:flex;gap:10px;margin-bottom:16px}
+.classify-btn{flex:1;padding:16px 12px;border:2px solid var(--border);border-radius:10px;background:var(--bg);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.classify-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.classify-btn.btn-bully:hover:not(:disabled){border-color:var(--wrong);background:#fef0f0}
+.classify-btn.btn-safe:hover:not(:disabled){border-color:var(--correct);background:#e8f8e8}
+.classify-btn.btn-check:hover:not(:disabled){border-color:var(--warn);background:#fff8e8}
+.classify-btn .btn-icon{font-size:28px}
+.classify-btn:disabled{cursor:default;opacity:.7}
+.feedback-box{margin-top:16px;border-radius:10px;padding:16px;display:none;animation:fadeIn .3s}
+.feedback-box.show{display:block}
+.feedback-box.correct{background:var(--correct-bg);border:1.5px solid #6fcf97}
+.feedback-box.wrong{background:var(--wrong-bg);border:1.5px solid #f6a0a0}
+.feedback-box.partial{background:var(--warn-bg);border:1.5px solid #f6d073}
+.feedback-verdict{font-size:15px;font-weight:700;margin-bottom:8px}
+.feedback-box.correct .feedback-verdict{color:var(--correct)}
+.feedback-box.wrong .feedback-verdict{color:var(--wrong)}
+.feedback-box.partial .feedback-verdict{color:var(--warn)}
+.feedback-explanation{font-size:14px;line-height:1.75;color:var(--text)}
+.law-tag{display:inline-block;margin-top:10px;background:var(--navy);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;margin-right:6px}
+.btn-next{margin-top:18px;width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;display:none}
+.btn-next:hover{background:var(--navy-light)}
+.btn-next.show{display:block}
+.welcome-icon{font-size:52px;text-align:center;margin-bottom:16px}
+.welcome-title{font-size:22px;font-weight:800;color:var(--navy-dark);text-align:center;margin-bottom:10px;line-height:1.4}
+.welcome-subtitle{text-align:center;color:var(--text-muted);font-size:14px;margin-bottom:24px;line-height:1.7}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.info-item{background:var(--bg);border-radius:10px;padding:14px 10px;text-align:center;border:1px solid var(--border)}
+.info-item .info-num{font-size:26px;font-weight:800;color:var(--navy)}
+.info-item .info-label{font-size:12px;color:var(--text-muted);margin-top:2px}
+.btn-start{width:100%;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:16px;font-size:16px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .18s}
+.btn-start:hover{background:var(--navy-light)}
+.result-score-wrap{text-align:center;margin-bottom:24px}
+.result-score-circle{width:110px;height:110px;border-radius:50%;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 16px rgba(26,58,92,.25)}
+.result-score-circle .score-num{font-size:36px;font-weight:800;color:#fff;line-height:1}
+.result-score-circle .score-total{font-size:13px;color:var(--gold-light)}
+.result-grade{font-size:20px;font-weight:800;color:var(--navy-dark);margin-bottom:6px}
+.result-comment{font-size:14px;color:var(--text-muted);line-height:1.65;max-width:480px;margin:0 auto 20px}
+.action-area{background:#eef3fa;border-radius:10px;padding:16px;margin-bottom:20px;font-size:13px;line-height:1.7}
+.result-btns{display:flex;gap:10px}
+.btn-retry{flex:1;background:var(--navy);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer}
+.btn-retry:hover{background:var(--navy-light)}
+.footer-note{text-align:center;font-size:11px;color:var(--text-muted);margin-top:20px;line-height:1.6}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.screen{animation:fadeIn .3s}
+@media(max-width:480px){.card{padding:22px 16px}.classify-btns{flex-direction:column}.info-grid{gap:8px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="game-header">
+<div class="logo-badge">🎯</div>
+<div><h1>霸凌型態分類挑戰</h1><p>拖曳或點擊分類——你的判斷準嗎？</p></div>
+</div>
+
+<div id="screen-welcome" class="screen">
+<div class="card">
+<div class="welcome-icon">⚖️</div>
+<h2 class="welcome-title">哪些行為構成職場霸凌？</h2>
+<p class="welcome-subtitle">快速判斷 12 個職場情境，<br>立即獲得法規解析。</p>
+<div class="info-grid">
+<div class="info-item"><div class="info-num">12</div><div class="info-label">情境題</div></div>
+<div class="info-item"><div class="info-num">3</div><div class="info-label">分類選項</div></div>
+<div class="info-item"><div class="info-num">~3</div><div class="info-label">分鐘完成</div></div>
+</div>
+<button class="btn-start" onclick="startGame()">開始分類挑戰 →</button>
+</div>
+<p class="footer-note">依《職業安全衛生法》§22-1 及《職場霸凌防治措施準則》設計</p>
+</div>
+
+<div id="screen-game" class="screen" style="display:none">
+<div class="card">
+<div class="progress-wrap">
+<div class="progress-label"><span id="prog-text">第 1 題，共 12 題</span><span id="prog-score">得分：0 / 0</span></div>
+<div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+</div>
+<span class="tag tag-classify">🏷️ 請分類</span>
+<div class="scenario-card" id="scenario-card"></div>
+<div class="classify-btns">
+<button class="classify-btn btn-bully" onclick="classify('bully')"><span class="btn-icon">🚫</span>構成霸凌</button>
+<button class="classify-btn btn-safe" onclick="classify('safe')"><span class="btn-icon">✅</span>不構成霸凌</button>
+<button class="classify-btn btn-check" onclick="classify('maybe')"><span class="btn-icon">⚠️</span>需進一步確認</button>
+</div>
+<div class="feedback-box" id="fb"><div class="feedback-verdict" id="fb-verdict"></div><div class="feedback-explanation" id="fb-expl"></div><div id="fb-laws"></div></div>
+<button class="btn-next" id="btn-next" onclick="nextQ()">下一題 →</button>
+</div>
+</div>
+
+<div id="screen-results" class="screen" style="display:none">
+<div class="card">
+<span class="tag tag-classify">分類完成</span>
+<div class="result-score-wrap">
+<div class="result-score-circle"><div class="score-num" id="r-score">0</div><div class="score-total">/ 12 分</div></div>
+<div class="result-grade" id="r-grade"></div>
+<p class="result-comment" id="r-comment"></p>
+</div>
+<div class="action-area" id="r-action"></div>
+<div class="result-btns">
+<button class="btn-retry" onclick="resetGame()">🔄 再試一次</button>
+<button class="btn-retry" style="background:var(--gold);color:var(--navy-dark)" onclick="showWelcome()">📋 回首頁</button>
+</div>
+</div>
+<p class="footer-note">若遇職場霸凌，請撥 1925 安心專線或向人事單位反映</p>
+</div>
+</div>
+
+<script>
+const ITEMS = [
+{scenario:"王主管連續三個月在週會上當眾罵小林「廢物、沒用」，還摔報告。",answer:"bully",expl:"持續性公開侮辱，損害人格尊嚴，構成職場霸凌。正確做法是私下具體回饋。",laws:["職安法 §22-1（言語攻擊）","準則第 3 條（持續性）"]},
+{scenario:"陳主管在獨立會議室內，逐條指出小美報告的 5 處數據錯誤，並提供修正建議。",answer:"safe",expl:"私下場合、針對工作表現給具體建議，屬正當績效管理，不構成霸凌。",laws:["準則第 3 條（正當管理）"]},
+{scenario:"同事阿華連續兩週不回應小明的早安問候，但工作上仍正常配合。",answer:"safe",expl:"社交習慣差異，無孤立、排斥或工作刁難，不達霸凌門檻。",laws:["職安法 §22-1（系統性要件）"]},
+{scenario:"同事群組散布阿美私生活不實謠言並截圖轉傳，已持續兩個月。",answer:"bully",expl:"散布不實謠言屬間接霸凌，損害名譽與職場地位，構成霸凌，亦可能涉及誹謗。",laws:["職安法 §22-1（名譽損害）","準則第 3 條（散布謠言）"]},
+{scenario:"業務主管指派小張一週完成一個月工作量，反映後說「做不完就別來上班」。",answer:"bully",expl:"不合理工作指派加威脅解僱，持續半年，構成霸凌。正當績效管理須提供資源且目標可達成。",laws:["職安法 §22-1（不合理工作指派）"]},
+{scenario:"HR 依公司績效辦法，對連續兩季未達標員工啟動 PIP，提供明確目標與資源。",answer:"safe",expl:"依程序啟動 PIP 是正當績效管理。關鍵：客觀事實、明確目標、資源支援。若惡意設不可達成目標則可能變質。",laws:["準則第 3 條但書（正當人事管理）"]},
+{scenario:"主管在員工提出霸凌申訴後三天，以「業務調整」為由將其調至偏遠分行。",answer:"bully",expl:"高度疑似報復性調動，違反 §22-4 不利對待禁止條款。雇主不得因申訴施以調職等不利處分。",laws:["職安法 §22-4（不利對待禁止）","準則第 15 條（申訴保護）"]},
+{scenario:"某部門全體同事有意識地不邀請阿強參加任何工作討論和聚餐，已超過三個月。",answer:"bully",expl:"有意識排斥孤立，使其無法正常參與工作，屬關係霸凌。主管知情默許更須負管理責任。",laws:["職安法 §22-1（孤立排斥）","§22-2（雇主防治義務）"]},
+{scenario:"主管在員工申請三天特休時說「現在這麼忙，請假就不用回來了」，僅發生過一次。",answer:"maybe",expl:"言論具威脅性，但僅發生一次，尚需「持續性」要件。建議記錄事件、向 HR 反映，由調查單位綜合評估。",laws:["職安法 §22-1（持續性要件）","勞基法 §38（特別休假）"]},
+{scenario:"銀行行員在服務窗口被客戶咆哮辱罵 10 分鐘，身旁主管全程未介入。",answer:"maybe",expl:"屬第三人霸凌，雇主依 §22-2 有防治義務。主管未介入可能構成未善盡義務，但客戶本身非雇主/同事，需進一步確認。",laws:["職安法 §22-2（第三人霸凌防治）","準則第 4 條"]},
+{scenario:"新進員工連續一個月被指派影印、訂便當、跑腿等，無其他核心業務分配。",answer:"bully",expl:"長期指派與職務無關的雜務，剝奪其專業成長機會，構成不合理工作指派型霸凌。",laws:["職安法 §22-1（不合理指派）","準則第 3 條"]},
+{scenario:"主管在年終考核中，依據客觀 KPI 數據給予員工較低評等，並附具體改善建議。",answer:"safe",expl:"以客觀數據為基礎的績效評核，附改善建議，屬正當管理行為。",laws:["準則第 3 條（正當績效管理）"]}
+];
+
+let idx=0, score=0;
+
+function s(id){return document.getElementById(id)}
+function showScreen(id){['screen-welcome','screen-game','screen-results'].forEach(x=>s(x).style.display='none');s(id).style.display='block';window.scrollTo(0,0)}
+function startGame(){idx=0;score=0;showScreen('screen-game');render()}
+function showWelcome(){showScreen('screen-welcome')}
+
+function render(){
+const it=ITEMS[idx], tot=ITEMS.length;
+s('prog-text').textContent=`第 ${idx+1} 題，共 ${tot} 題`;
+s('prog-score').textContent=`得分：${score} / ${idx}`;
+s('prog-fill').style.width=`${(idx/tot)*100}%`;
+s('scenario-card').className='scenario-card';
+s('scenario-card').textContent=it.scenario;
+s('fb').className='feedback-box';
+s('btn-next').className='btn-next';
+document.querySelectorAll('.classify-btn').forEach(b=>b.disabled=false);
+}
+
+function classify(type){
+const it=ITEMS[idx];
+const btns=document.querySelectorAll('.classify-btn');
+btns.forEach(b=>b.disabled=true);
+const correct=type===it.answer;
+if(correct) score++;
+const fb=s('fb'), v=s('fb-verdict'), e=s('fb-expl'), l=s('fb-laws');
+const card=s('scenario-card');
+if(correct){fb.className='feedback-box correct show';v.textContent='✅ 分類正確！'}
+else{fb.className='feedback-box wrong show';const labels={bully:'構成霸凌',safe:'不構成霸凌',maybe:'需進一步確認'};v.textContent=`❌ 分類錯誤。正確答案為「${labels[it.answer]}」`}
+e.innerHTML=it.expl;
+l.innerHTML=it.laws.map(x=>`<span class="law-tag">${x}</span>`).join('');
+card.className='scenario-card '+(correct?'flash-correct':'flash-wrong');
+s('btn-next').className='btn-next show';
+}
+
+function nextQ(){idx++;if(idx>=ITEMS.length)showResults();else render()}
+
+function showResults(){
+showScreen('screen-results');
+s('r-score').textContent=score;
+let grade,comment,action;
+if(score>=11){grade='🏆 分類達人';comment='你對霸凌與非霸凌的判斷力極佳！清楚掌握定義與例外。';action='建議擔任內部宣導種子講師。';}
+else if(score>=8){grade='👍 觀念良好';comment='大多能正確判斷，但在邊界情境（如第三人霸凌、單次事件）上需加強。';action='建議閱讀員工版懶人包，特別留意「持續性」要件。';}
+else if(score>=5){grade='📖 需要加強';comment='對霸凌的定義與界線仍有混淆，建議系統性學習。';action='建議參加教育訓練課程並詳讀懶人包。';}
+else{grade='⚠️ 請務必學習';comment='多數判斷錯誤，代表對職場霸凌的認識不足。';action='強烈建議參加教育訓練，並撥 1925 安心專線諮詢。';}
+s('r-grade').textContent=grade;
+s('r-comment').textContent=comment;
+s('r-action').innerHTML=`<strong>💡 建議行動：</strong>${action}`;
+}
+
+function resetGame(){startGame()}
+</script>
+</body>
+</html>
