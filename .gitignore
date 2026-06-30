@@ -1,0 +1,39 @@
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+._*
+
+# Office 暫存檔（開啟中的 Word/Excel/PowerPoint 會產生）
+~$*.docx
+~$*.xlsx
+~$*.pptx
+~$*.doc
+~$*.xls
+~$*.ppt
+
+# 個資保護：原始（未去識別化）案例附件
+# 僅允許 *_redacted.* 進入版控
+assets/case_*
+!assets/case_*_redacted.*
+
+# 編輯器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# AI Agent 設定檔
+CLAUDE.md
+AGENTS.md
+CONVENTIONS.md
+AIDER_CONVENTIONS.md
+.cursorrules
+.cursor/
+.windsurfrules
+.clinerules
+.cline_rules
