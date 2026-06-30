@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>職場霸凌情境判斷遊戲 ｜ ○○商業銀行</title>
+  <style>
+    :root {
+      --navy: #1a3a5c;
+      --navy-dark: #122a44;
+      --navy-light: #2a5080;
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1e2a38;
+      --text-muted: #5a6a7a;
+      --border: #d0dce8;
+      --correct: #1e7e44;
+      --correct-bg: #e6f9ed;
+      --wrong: #b91c1c;
+      --wrong-bg: #fde8e8;
+      --warn: #b45309;
+      --warn-bg: #fff7e6;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(26,58,92,0.10);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 16px 48px;
+    }
+    .container {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    /* ── Header ── */
+    .game-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .game-header .logo-badge {
+      width: 44px; height: 44px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .game-header h1 {
+      font-size: 17px;
+      color: var(--navy);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .game-header p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Progress ── */
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .progress-bar-bg {
+      background: var(--border);
+      border-radius: 99px;
+      height: 7px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--navy-light), var(--gold));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── Badge tag ── */
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+    .tag-question { background: #e8eef6; color: var(--navy); }
+    .tag-result { background: #fef3d0; color: #7a5800; }
+
+    /* ── Scenario ── */
+    .scenario-box {
+      background: var(--bg);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 18px;
+      margin-bottom: 22px;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .scenario-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── Question ── */
+    .question-text {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    /* ── Options ── */
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, transform 0.12s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--navy-light);
+      background: #eaf0f8;
+      transform: translateX(3px);
+    }
+    .option-btn .opt-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .option-btn.selected-correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+    .option-btn.selected-correct .opt-icon { background: var(--correct); }
+    .option-btn.selected-wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+    .option-btn.selected-wrong .opt-icon { background: var(--wrong); }
+    .option-btn.reveal-correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+    .option-btn.reveal-correct .opt-icon { background: var(--correct); }
+    .option-btn:disabled { cursor: default; }
+
+    /* ── Feedback ── */
+    .feedback-box {
+      margin-top: 20px;
+      border-radius: 10px;
+      padding: 16px 18px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .feedback-box.show { display: block; }
+    .feedback-box.correct { background: var(--correct-bg); border: 1.5px solid #6fcf97; }
+    .feedback-box.wrong { background: var(--wrong-bg); border: 1.5px solid #f6a0a0; }
+    .feedback-box.partial { background: var(--warn-bg); border: 1.5px solid #f6d073; }
+    .feedback-verdict {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .feedback-box.correct .feedback-verdict { color: var(--correct); }
+    .feedback-box.wrong .feedback-verdict { color: var(--wrong); }
+    .feedback-box.partial .feedback-verdict { color: var(--warn); }
+    .feedback-explanation {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+    .law-tag {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+
+    /* ── Next button ── */
+    .btn-next {
+      margin-top: 22px;
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s;
+      display: none;
+    }
+    .btn-next:hover { background: var(--navy-light); }
+    .btn-next.show { display: block; }
+
+    /* ── Welcome Screen ── */
+    .welcome-icon { font-size: 52px; text-align: center; margin-bottom: 16px; }
+    .welcome-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy-dark);
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .welcome-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .info-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .info-item .info-num {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .info-item .info-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .rule-list {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .rule-list h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .rule-list li {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-left: 16px;
+    }
+    .btn-start {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-start:hover { background: var(--navy-light); }
+
+    /* ── Results Screen ── */
+    .result-score-wrap { text-align: center; margin-bottom: 28px; }
+    .result-score-circle {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 4px 16px rgba(26,58,92,0.25);
+    }
+    .result-score-circle .score-num {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+    .result-score-circle .score-total {
+      font-size: 13px;
+      color: var(--gold-light);
+    }
+    .result-grade {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+    .result-comment {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .result-breakdown {
+      margin-bottom: 24px;
+    }
+    .result-breakdown h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-q { color: var(--text-muted); min-width: 36px; }
+    .breakdown-text { flex: 1; color: var(--text); }
+    .breakdown-mark {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .mark-correct { background: var(--correct-bg); color: var(--correct); }
+    .mark-wrong { background: var(--wrong-bg); color: var(--wrong); }
+    .action-area {
+      background: #eef3fa;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+    }
+    .action-area h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .action-area p {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .result-btns { display: flex; gap: 10px; }
+    .btn-retry {
+      flex: 1;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-retry:hover { background: var(--navy-light); }
+    .btn-ref {
+      flex: 1;
+      background: var(--card);
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      border-radius: 10px;
+      padding: 13px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .btn-ref:hover { background: #eef3fa; }
+    .footer-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .screen { animation: fadeIn 0.3s ease; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 22px 16px; }
+      .info-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .result-btns { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="game-header">
+    <div class="logo-badge">🛡️</div>
+    <div>
+      <h1>職場霸凌情境判斷遊戲</h1>
+      <p>○○商業銀行 ｜ 依職業安全衛生法 §22-1 設計</p>
+    </div>
+  </div>
+
+  <!-- ====== WELCOME SCREEN ====== -->
+  <div id="screen-welcome" class="screen">
+    <div class="card">
+      <div class="welcome-icon">⚖️</div>
+      <h2 class="welcome-title">你能分辨職場霸凌嗎？</h2>
+      <p class="welcome-subtitle">
+        透過 10 道真實情境題，測試你對職場霸凌的判斷力，<br/>
+        並學習正確的法規知識與應對方式。
+      </p>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-num">10</div>
+          <div class="info-label">情境題</div>
+        </div>
+        <div class="info-item">
+          <div class="info-num">3</div>
+          <div class="info-label">選項／題</div>
+        </div>
+        <div class="info-item">
+          <div class="info-num">~5</div>
+          <div class="info-label">分鐘完成</div>
+        </div>
+      </div>
+      <div class="rule-list">
+        <h3>📋 作答說明</h3>
+        <ul>
+          <li>每題描述一個職場情境，請依情境判斷。</li>
+          <li>每題有三個選項：「構成霸凌」、「不構成霸凌」、「需進一步確認」。</li>
+          <li>作答後會立即顯示解析與對應法規條文。</li>
+          <li>最後依得分提供建議行動。</li>
+        </ul>
+      </div>
+      <button class="btn-start" onclick="startGame()">開始測驗 →</button>
+    </div>
+    <p class="footer-note">本遊戲依《職業安全衛生法》第二章之一及《職場霸凌防治措施準則》設計，僅供教育訓練使用，不構成法律意見。</p>
+  </div>
+
+  <!-- ====== QUIZ SCREEN ====== -->
+  <div id="screen-quiz" class="screen" style="display:none;">
+    <div class="card">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span id="progress-text">第 1 題，共 10 題</span>
+          <span id="progress-score">得分：0 / 0</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <span class="tag tag-question" id="q-tag">情境判斷</span>
+
+      <div class="scenario-box">
+        <div class="scenario-label">📌 情境描述</div>
+        <div id="q-scenario"></div>
+      </div>
+
+      <div class="question-text" id="q-text"></div>
+
+      <div class="options" id="q-options"></div>
+
+      <div class="feedback-box" id="feedback-box">
+        <div class="feedback-verdict" id="feedback-verdict"></div>
+        <div class="feedback-explanation" id="feedback-explanation"></div>
+        <div id="feedback-law"></div>
+      </div>
+
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- ====== RESULTS SCREEN ====== -->
+  <div id="screen-results" class="screen" style="display:none;">
+    <div class="card">
+      <span class="tag tag-result">測驗完成</span>
+      <div class="result-score-wrap">
+        <div class="result-score-circle">
+          <div class="score-num" id="result-score-num">0</div>
+          <div class="score-total">/ 10 分</div>
+        </div>
+        <div class="result-grade" id="result-grade"></div>
+        <p class="result-comment" id="result-comment"></p>
+      </div>
+
+      <div class="result-breakdown">
+        <h3>📊 各題作答結果</h3>
+        <div id="breakdown-list"></div>
+      </div>
+
+      <div class="action-area" id="action-area">
+        <h3>💡 建議行動</h3>
+        <p id="action-text"></p>
+      </div>
+
+      <div class="result-btns">
+        <button class="btn-retry" onclick="resetGame()">🔄 再試一次</button>
+        <button class="btn-ref" onclick="showRef()">📖 查看法規速查</button>
+      </div>
+    </div>
+    <p class="footer-note">本遊戲僅供教育訓練。若遇職場霸凌，請撥 <strong>1925</strong> 安心專線或向本行申訴信箱 harassment@bank.com.tw 反映。</p>
+  </div>
+
+  <!-- ====== REFERENCE SCREEN ====== -->
+  <div id="screen-ref" class="screen" style="display:none;">
+    <div class="card">
+      <span class="tag tag-result">法規速查</span>
+      <h2 style="font-size:18px;font-weight:800;color:var(--navy-dark);margin-bottom:16px;">關鍵法定期限速查</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px;">
+        <thead>
+          <tr style="background:var(--navy);color:#fff;">
+            <th style="padding:9px 12px;text-align:left;border-radius:8px 0 0 0;">程序階段</th>
+            <th style="padding:9px 12px;text-align:left;">起算點</th>
+            <th style="padding:9px 12px;text-align:left;border-radius:0 8px 0 0;">法定期限</th>
+          </tr>
+        </thead>
+        <tbody id="ref-table-body">
+        </tbody>
+      </table>
+      <h2 style="font-size:18px;font-weight:800;color:var(--navy-dark);margin-bottom:12px;">職場霸凌構成要件</h2>
+      <div style="background:var(--bg);border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.8;margin-bottom:20px;border:1px solid var(--border);">
+        依《職業安全衛生法》第 22-1 條，職場霸凌係指雇主、主管或同事等，對勞工實施<strong>持續性的不當行為</strong>，包括：
+        <ul style="margin-top:8px;margin-left:18px;">
+          <li>言語攻擊、嘲諷、辱罵</li>
+          <li>肢體侵犯或威脅</li>
+          <li>排斥孤立、散布謠言</li>
+          <li>過度監控、不合理的工作指派</li>
+          <li>任何損害其人格尊嚴或職場地位的行為</li>
+        </ul>
+        <br/>⚠️ <strong>正當的工作指導、績效管理，不構成霸凌。</strong>
+      </div>
+      <button class="btn-retry" onclick="backToResults()">← 返回測驗結果</button>
+    </div>
+    <p class="footer-note">法規如有異動，請以勞動部最新公告為準。</p>
+  </div>
+
+</div>
+
+<script>
+// ─── 題目資料 ───────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    scenario: "王主管在週會上，當著全部門 20 名同事的面，對小林大聲斥責：「你這份報告爛透了，跟廢物沒兩樣！」已連續三個月在公開場合以羞辱性言詞批評小林。",
+    question: "王主管的行為是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 0,
+    feedbackType: "correct",  // will be set dynamically
+    explanation: "✅ 王主管以侮辱性字眼（如「廢物」）公開羞辱員工，且持續超過三個月，符合「持續性不當言語攻擊、損害人格尊嚴」的要件，<strong>構成職場霸凌</strong>。即使員工確有工作缺失，正確做法是私下給予具體建設性回饋，而非公開辱罵。",
+    laws: ["職安法 §22-1（言語攻擊）", "準則第 3 條（持續性要件）"]
+  },
+  {
+    scenario: "陳員在部門 LINE 群組散布關於阿美私生活的不實謠言，並截圖轉傳給其他同事，導致阿美在辦公室受到異樣眼光，已持續兩個月。",
+    question: "陳員散布謠言的行為是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 0,
+    explanation: "✅ 散布<strong>不實謠言</strong>屬於間接霸凌行為，損害當事人名譽與職場地位，且已持續兩個月，符合「散布謠言損害名譽、持續性」要件，<strong>構成職場霸凌</strong>。此行為亦可能涉及《刑法》誹謗罪，雇主應即介入處理。",
+    laws: ["職安法 §22-1（名譽損害）", "準則第 3 條（散布謠言）"]
+  },
+  {
+    scenario: "業務主管長期指派小張在一週內完成原本需要一個月的客戶拜訪計畫，當小張反映資源不足、人手不夠時，主管直接拒絕並說「做不完就別來上班」。此情況已持續半年。",
+    question: "主管的指派方式是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 0,
+    explanation: "✅ 長期指派<strong>不合理的工作量</strong>（一週完成一個月份量），且拒絕必要資源支援、以解僱相威脅，持續半年，符合「不合理工作指派、威脅恐嚇」要件，<strong>構成職場霸凌</strong>。正當績效管理允許設定挑戰性目標，但前提是提供必要資源且目標客觀可達成。",
+    laws: ["職安法 §22-1（不合理工作指派）", "準則第 3 條（過度要求）"]
+  },
+  {
+    scenario: "某部門所有同事，包含主管，有意識地不邀請阿強參加任何工作討論、下班聚餐，甚至在辦公室中故意孤立阿強，超過三個月。",
+    question: "整個部門孤立阿強的行為是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 0,
+    explanation: "✅ <strong>有意識地排斥孤立</strong>特定員工，使其無法正常參與工作，屬於「關係霸凌」的典型型態，且已持續三個月以上，<strong>構成職場霸凌</strong>。主管若知情默許或主動參與，更須負起管理責任，雇主依職安法 §22-2 有義務採取防治措施。",
+    laws: ["職安法 §22-1（孤立排斥）", "職安法 §22-2（雇主防治義務）"]
+  },
+  {
+    scenario: "陳主管在月績效面談中，逐條指出小美上月報告中有 5 處數據錯誤，要求下月改善，並提供具體的修正建議和範例。面談在獨立會議室進行，態度平和。",
+    question: "陳主管的績效回饋是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 1,
+    explanation: "❌ 這是<strong>正當的工作指導與績效管理</strong>，不構成職場霸凌。主管在私下場合、以平和態度、針對具體工作表現（而非人格）給予改善建議，是雇主正當管理行為。《職場霸凌防治措施準則》明定，合理的工作指導、績效評核屬於正當管理，不列入霸凌範疇。",
+    laws: ["準則第 3 條（正當管理行為除外）", "職安法 §22-1 立法說明"]
+  },
+  {
+    scenario: "HR 依公司績效管理辦法，對連續兩季未達目標的員工小劉，依程序啟動為期三個月的績效改善計畫（PIP），提供明確的改善目標、資源支援與定期追蹤。",
+    question: "HR 啟動 PIP 的行為是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 1,
+    explanation: "❌ 依程序啟動 PIP 是<strong>正當的績效管理工具</strong>，不構成職場霸凌。關鍵要素：依公司規定程序、有客觀績效不達標事實、提供明確目標與資源支援。若 PIP 被惡意用來蒐集解僱理由、目標故意設為不可達成，則可能轉變為霸凌，需個案判斷。",
+    laws: ["準則第 3 條但書（正當人事管理）", "勞動部職場霸凌防治措施指導手冊"]
+  },
+  {
+    scenario: "阿華向主管申請三天特休，主管說：「現在這麼忙，你要請假就不用回來了。」此後阿華沒有再申請特休。此狀況僅發生過一次。",
+    question: "主管的言論是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 2,
+    explanation: "⚠️ 需<strong>進一步確認</strong>。主管的言論具有威脅性質，若員工因此心生恐懼而放棄請假權利，具一定霸凌跡象。然而，法規上霸凌通常需具備「<strong>持續性</strong>」要件。僅發生一次的言語威脅，可能尚未達到霸凌門檻，但仍屬不當管理，且可能違反《勞動基準法》干涉特休請假權利。建議員工記錄事件、向 HR 申訴，由申訴調查委員會綜合評估。",
+    laws: ["職安法 §22-1（持續性要件）", "勞基法 §38（特別休假）"]
+  },
+  {
+    scenario: "銀行行員阿珠在服務窗口遭到客戶大聲咆哮、言語辱罵長達 10 分鐘。站在旁邊的主管全程目睹，但始終沒有介入制止，也未事後關心阿珠。",
+    question: "主管對客戶霸凌袖手旁觀的行為，雇主是否有防治義務？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 2,
+    explanation: "⚠️ 需<strong>進一步確認</strong>。客戶對員工的霸凌屬於「<strong>第三人霸凌</strong>」，《職業安全衛生法》§22-2 明定雇主對此有<strong>防治義務</strong>，包含預防措施（SOP、服務拒絕機制）及事後關懷支持。主管未介入制止，可能構成雇主未善盡防治義務。然而客戶本身不是「雇主、主管或同事」，其行為是否直接被認定為職場霸凌尚有爭議，故建議進一步確認事實並通報 HR。",
+    laws: ["職安法 §22-2（第三人騷擾霸凌防治）", "職場霸凌防治措施準則第 4 條"]
+  },
+  {
+    scenario: "同事小宇連續兩週不回應阿明的早安問候，但在工作上仍正常配合、按時完成交辦任務，且沒有其他異常互動。",
+    question: "小宇不回應問候的行為是否構成職場霸凌？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 1,
+    explanation: "❌ 僅不回應問候，工作上仍正常配合，<strong>不構成職場霸凌</strong>。職場霸凌需具備「持續性且系統性的不當行為」及「對當事人造成顯著心理傷害或職場地位損害」。個人社交習慣不同，若無其他孤立、排斥或工作刁難等行為，不達霸凌門檻。若阿明主觀感受不適，可尋求 EAP 員工協助方案支持。",
+    laws: ["職安法 §22-1（持續性、系統性要件）", "準則第 3 條（主觀傷害要件）"]
+  },
+  {
+    scenario: "員工小芬對主管提出職場霸凌申訴後的第三天，主管以「業務調整」為由，將小芬調派至距離住家兩小時車程的偏遠分行，且調動前未依程序通知。",
+    question: "主管在申訴後將小芬調動的行為是否構成違法？",
+    options: ["構成霸凌", "不構成霸凌", "需進一步確認"],
+    answer: 0,
+    explanation: "✅ 此行為高度疑似<strong>報復性調動</strong>，違反《職業安全衛生法》§22-4 明定的「<strong>不利對待禁止條款</strong>」。雇主不得因員工提出申訴而對其施以調職、減薪、降職等不利處分。申訴後三天即發生調動、未依程序通知，時間點高度吻合。即使以「業務調整」為由，仍構成違法，雇主須負舉證責任說明調動必要性。",
+    laws: ["職安法 §22-4（不利對待禁止）", "準則第 15 條（申訴保護）"]
+  }
+];
+
+const DEADLINES = [
+  { stage: "受理判定並書面通知", start: "接獲申訴之日", limit: "10 個工作日" },
+  { stage: "登錄勞動部系統", start: "受理翌日", limit: "7 個工作日" },
+  { stage: "組成調查小組（100+人）", start: "受理申訴日", limit: "15 個工作日" },
+  { stage: "完成調查報告", start: "小組成立翌日", limit: "2 個月（可延 1 月）" },
+  { stage: "申訴成立與否決定", start: "報告完成日", limit: "1 個月" },
+  { stage: "書面通知並登錄", start: "決定日", limit: "10 個工作日" },
+  { stage: "申復期限", start: "收到決定翌日", limit: "30 日（一次為限）" },
+  { stage: "紀錄保存", start: "結案日", limit: "3 年" }
+];
+
+// ─── 遊戲狀態 ─────────────────────────────────────────────────
+let currentQ = 0;
+let score = 0;
+let answers = [];  // {correct: bool, chosenIdx: int}
+
+// ─── 畫面切換 ─────────────────────────────────────────────────
+function showScreen(id) {
+  ['screen-welcome','screen-quiz','screen-results','screen-ref'].forEach(s => {
+    document.getElementById(s).style.display = 'none';
+  });
+  document.getElementById(id).style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+// ─── 遊戲流程 ─────────────────────────────────────────────────
+function startGame() {
+  currentQ = 0;
+  score = 0;
+  answers = [];
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQ];
+  const total = QUESTIONS.length;
+
+  // progress
+  document.getElementById('progress-text').textContent = `第 ${currentQ + 1} 題，共 ${total} 題`;
+  document.getElementById('progress-score').textContent = `得分：${score} / ${currentQ}`;
+  document.getElementById('progress-fill').style.width = `${(currentQ / total) * 100}%`;
+
+  // content
+  document.getElementById('q-scenario').innerHTML = q.scenario;
+  document.getElementById('q-text').textContent = q.question;
+
+  // options
+  const optWrap = document.getElementById('q-options');
+  optWrap.innerHTML = '';
+  const icons = ['🔴', '🟢', '🟡'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="opt-icon">${icons[i]}</span>${opt}`;
+    btn.onclick = () => selectAnswer(i);
+    optWrap.appendChild(btn);
+  });
+
+  // reset feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = 'feedback-box';
+  document.getElementById('btn-next').className = 'btn-next';
+}
+
+function selectAnswer(chosenIdx) {
+  const q = QUESTIONS[currentQ];
+  const correct = chosenIdx === q.answer;
+  if (correct) score++;
+  answers.push({ correct, chosenIdx });
+
+  // disable all buttons
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.answer) {
+      btn.classList.add('reveal-correct');
+      btn.querySelector('.opt-icon').textContent = '✓';
+    }
+    if (i === chosenIdx && !correct) {
+      btn.classList.add('selected-wrong');
+      btn.querySelector('.opt-icon').textContent = '✗';
+    }
+  });
+
+  // feedback
+  const fb = document.getElementById('feedback-box');
+  const verdict = document.getElementById('feedback-verdict');
+  const explanation = document.getElementById('feedback-explanation');
+  const lawDiv = document.getElementById('feedback-law');
+
+  if (correct) {
+    fb.className = 'feedback-box correct show';
+    verdict.innerHTML = '✅ 答對了！';
+  } else {
+    fb.className = 'feedback-box wrong show';
+    const correctLabel = q.options[q.answer];
+    verdict.innerHTML = `❌ 答錯了。正確答案是「${correctLabel}」`;
+  }
+
+  explanation.innerHTML = q.explanation;
+  lawDiv.innerHTML = q.laws.map(l => `<span class="law-tag">${l}</span> `).join('');
+
+  // next button
+  const nextBtn = document.getElementById('btn-next');
+  const isLast = currentQ === QUESTIONS.length - 1;
+  nextBtn.textContent = isLast ? '查看結果 →' : '下一題 →';
+  nextBtn.className = 'btn-next show';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= QUESTIONS.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+// ─── 結果計算 ─────────────────────────────────────────────────
+function showResults() {
+  showScreen('screen-results');
+
+  document.getElementById('result-score-num').textContent = score;
+  document.getElementById('progress-fill').style.width = '100%';
+
+  // grade
+  let grade, comment, action;
+  if (score >= 9) {
+    grade = '🏆 職場霸凌防治達人';
+    comment = `你對職場霸凌的判斷力相當精準！對法規要件（持續性、不當行為、人格尊嚴損害）有清晰理解。繼續維持，並協助周遭同事建立正確觀念。`;
+    action = '建議參加進階課程或擔任宣導種子講師，協助○○商業銀行深化防霸凌文化。';
+  } else if (score >= 7) {
+    grade = '👍 觀念良好，仍有進步空間';
+    comment = `你已掌握大部分職場霸凌的判斷要點，但在部分邊界情境（如第三人霸凌、不利對待）上還可以更精確。`;
+    action = '建議閱讀主管版懶人包（doc 04），特別留意「不利對待禁止條款」與「正當管理 vs 霸凌」的區分。';
+  } else if (score >= 5) {
+    grade = '📖 需要加強，建議研習';
+    comment = `你對職場霸凌有基本認識，但有幾個關鍵判斷點尚未掌握。建議特別注意霸凌的「持續性」要件與雇主防治義務範圍。`;
+    action = '建議完整閱讀員工版懶人包（doc 03），並參加下一期教育訓練課程（doc 05）。如遇問題請洽 EAP 窗口聯絡資訊。';
+  } else {
+    grade = '⚠️ 請務必參加教育訓練';
+    comment = `職場霸凌的判斷涉及多項法規要件，需要系統性學習。錯誤的判斷可能對受害者或雇主造成重大影響。`;
+    action = '強烈建議參加○○商業銀行職場霸凌防治教育訓練課程，並閱讀員工版懶人包與主管版懶人包。申訴或需協助請撥 1925 安心專線。';
+  }
+
+  document.getElementById('result-grade').textContent = grade;
+  document.getElementById('result-comment').textContent = comment;
+  document.getElementById('action-text').textContent = action;
+
+  // breakdown
+  const list = document.getElementById('breakdown-list');
+  list.innerHTML = '';
+  answers.forEach((ans, i) => {
+    const q = QUESTIONS[i];
+    const row = document.createElement('div');
+    row.className = 'breakdown-row';
+    const mark = ans.correct
+      ? `<div class="breakdown-mark mark-correct">✓</div>`
+      : `<div class="breakdown-mark mark-wrong">✗</div>`;
+    const chosen = q.options[ans.chosenIdx];
+    const correct = q.options[q.answer];
+    const detail = ans.correct
+      ? `<span style="color:var(--text-muted);font-size:12px;">（${chosen}）</span>`
+      : `<span style="color:var(--wrong);font-size:12px;">（你選：${chosen}｜正解：${correct}）</span>`;
+    row.innerHTML = `
+      <span class="breakdown-q">Q${i+1}</span>
+      <span class="breakdown-text">${q.question.replace('是否構成','').replace('是否','').trim()}${detail}</span>
+      ${mark}
+    `;
+    list.appendChild(row);
+  });
+
+  // ref table
+  const tbody = document.getElementById('ref-table-body');
+  tbody.innerHTML = DEADLINES.map((d, i) => `
+    <tr style="background:${i % 2 === 0 ? 'var(--bg)' : '#fff'};">
+      <td style="padding:8px 12px;">${d.stage}</td>
+      <td style="padding:8px 12px;color:var(--text-muted);">${d.start}</td>
+      <td style="padding:8px 12px;font-weight:700;color:var(--navy);">${d.limit}</td>
+    </tr>
+  `).join('');
+}
+
+function resetGame() {
+  startGame();
+}
+
+function showRef() {
+  showScreen('screen-ref');
+}
+
+function backToResults() {
+  showScreen('screen-results');
+}
+</script>
+</body>
+</html>
