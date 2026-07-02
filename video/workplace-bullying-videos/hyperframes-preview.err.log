@@ -1,0 +1,27 @@
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[Studio] Thumbnail generation failed: Navigation timeout of 10000 ms exceeded
+[WARN] [Compiler] WARNING: Failed to download CDN script: https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js — TimeoutError: The operation was aborted due to timeout. The render may fail if this script is required (e.g. GSAP). Consider bundling it locally in your project.
+[WARN] [Compiler] No deterministic font mapping for: Noto Sans TC
+  Mapped fonts: andale mono → jetbrains-mono, archivo black → archivo-black, arial black → montserrat, arial → inter, avenir next → inter, avenir → inter, bebas neue → league-gothic, book antiqua → eb-garamond, calibri → inter, cambria → eb-garamond, candara → inter, consolas → jetbrains-mono, corbel → inter, courier new → jetbrains-mono, courier → jetbrains-mono, dejavu sans mono → jetbrains-mono, dejavu sans → inter, dejavu serif → eb-garamond, din alternate → montserrat, eb garamond → eb-garamond, futura → montserrat, garamond → eb-garamond, geneva → inter, georgia → eb-garamond, helvetica bold → inter, helvetica neue → inter, helvetica → inter, ibm plex mono → ibm-plex-mono, inter, jetbrains mono → jetbrains-mono, lato, league gothic → league-gothic, liberation mono → jetbrains-mono, liberation sans → inter, liberation serif → eb-garamond, lucida console → jetbrains-mono, lucida grande → inter, lucida sans typewriter → jetbrains-mono, lucida sans unicode → inter, lucida sans → inter, menlo → jetbrains-mono, monaco → jetbrains-mono, montserrat, noto sans japanese → noto-sans-jp, noto sans jp → noto-sans-jp, noto sans → inter, nunito, open sans → open-sans, optima → inter, oswald, outfit, palatino linotype → eb-garamond, palatino → eb-garamond, playfair display → playfair-display, poppins, roboto, segoe ui → roboto, sf mono → jetbrains-mono, sf pro display → inter, sf pro rounded → inter, sf pro text → inter, sf pro → inter, source code pro → source-code-pro, space mono → space-mono, tahoma → inter, times new roman → eb-garamond, times → eb-garamond, trebuchet ms → inter, verdana → inter
+  To fix, pick one:
+    1. Use a mapped font name instead (see list above)
+    2. Add a @font-face block in your HTML with a local or hosted font file
+    3. Install the font locally on the render machine (Docker: add to Dockerfile)
+    4. Add an alias to FONT_ALIAS_MAP in packages/core/src/fonts/aliases.ts (for contributors)
+  Docs: https://hyperframes.heygen.com/docs/fonts
+[WARN] [Render] Auto-worker calibration failed; using conservative worker budget. {"protocolTimeout":30000,"error":"Navigation timeout of 60000 ms exceeded"}
+[FrameCapture] Timed out closing page; forcing browser process shutdown
+[WARN] [Compiler] WARNING: Failed to download CDN script: https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js — TimeoutError: The operation was aborted due to timeout. The render may fail if this script is required (e.g. GSAP). Consider bundling it locally in your project.
+[WARN] [Render] Auto-worker calibration failed; using conservative worker budget. {"protocolTimeout":30000,"error":"Navigation timeout of 60000 ms exceeded"}
+[WARN] [Render] Auto-worker calibration failed; using conservative worker budget. {"protocolTimeout":30000,"error":"Navigation timeout of 60000 ms exceeded"}
+[FrameCapture] Timed out closing page; forcing browser process shutdown
+[FrameCapture] Timed out closing page; forcing browser process shutdown
+[FrameCapture] Timed out closing page; forcing browser process shutdown
+[WARN] Parallel capture timed out with auto workers. Video-heavy compositions often need sequential capture. Retry with --workers 1

@@ -14,6 +14,7 @@
 - [適用對象](#-適用對象)
 - [檔案清單](#-檔案清單)
 - [互動遊戲清單](#-互動遊戲清單)
+- [HyperFrames 影片製作](#-hyperframes-影片製作)
 - [快速開始](#-快速開始)
 - [法規依據](#-法規依據)
 - [關鍵法定期限速查表](#-關鍵法定期限速查表)
@@ -47,8 +48,9 @@
 | 05 | 教育訓練簡報 | pptx | 30 張投影片、3 小時課程 |
 | 06 | 職場霸凌情境判斷遊戲 | html | 互動小遊戲，10 道情境判斷題，含即時解析與法規引用 |
 | 07 | 職場霸凌防治法規心智圖 | md | 10 個 Mermaid 心智圖，整理法規架構、申訴調查、教育訓練與最高負責人外部申訴 |
+| 08 | HyperFrames 影片專案 | html / ps1 / bat | 10 支職場霸凌防治短片、Studio 一鍵啟動與批次渲染 |
 
-所有檔案位於 `docs/` 資料夾。
+主要教材檔案位於 `docs/` 資料夾；互動遊戲位於 `games/`；影片製作專案位於 `video/workplace-bullying-videos/`。
 
 ## 🎮 互動遊戲清單
 
@@ -69,11 +71,85 @@
 
 > 另於 `docs/06_職場霸凌情境判斷遊戲.html` 提供 10 道情境判斷題，含即時法規解析。
 
+## 🎬 HyperFrames 影片製作
+
+本專案包含一組可用 HyperFrames Studio 編修與渲染的職場霸凌防治短片，主要專案位置：
+
+```powershell
+video\workplace-bullying-videos
+```
+
+### 環境設定
+
+詳細安裝、設定、Chrome Headless Shell 修復與疑難排解步驟，請見：
+
+```powershell
+instruction\setup-hyperframe.md
+```
+
+HyperFrames 本機預覽與渲染需要：
+
+- Node.js 22 以上
+- npm / npx
+- FFmpeg / FFprobe
+- HyperFrames CLI
+- HyperFrames 指定版本的 Chrome Headless Shell
+
+### 一鍵啟動 Studio
+
+專案根目錄提供批次檔：
+
+```powershell
+start-hyperframes-studio.bat
+```
+
+雙擊後會啟動 HyperFrames Studio，預設網址：
+
+```text
+http://127.0.0.1:3002
+```
+
+啟動後請保持命令視窗開啟；關閉視窗會停止 Studio。
+
+### 手動檢查與啟動
+
+```powershell
+cd video\workplace-bullying-videos
+npm run check
+npx --yes hyperframes@0.7.22 preview --port 3002 --open
+```
+
+### 批次渲染
+
+```powershell
+cd video\workplace-bullying-videos
+powershell -ExecutionPolicy Bypass -File .\render-all.ps1
+```
+
+先用草稿品質檢查：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\render-all.ps1 -Quality draft
+```
+
+只測第一支：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\render-all.ps1 -Quality draft -Workers 1 -Limit 1
+```
+
+預設輸出位置：
+
+```powershell
+video\workplace-bullying-videos\output
+```
+
 ## 🚀 快速開始
 - **自行查核** → 開啟 `docs/01_*` + `docs/02_*`
 - **宣導訓練** → 列印 `docs/03_*` `docs/04_*`、播放 `docs/05_*`
 - **互動遊戲** → 雙點開啟 `games/*.html`（10 款不同玩法）或 `docs/06_*`（情境判斷題），可嵌入內網 intranet
 - **法規導讀** → 開啟 `docs/07_*`，可用於課程暖身、制度說明或主管法規速讀
+- **宣導短片** → 雙擊 `start-hyperframes-studio.bat` 開啟 HyperFrames Studio，或執行 `video/workplace-bullying-videos/render-all.ps1` 批次輸出影片
 
 ## 🏛️ 法規依據
 - 職業安全衛生法 §22-1 ~ §22-5（114.12.19 修正，115.7.1 施行）

@@ -1,0 +1,414 @@
+
+  ⚠ [index.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [index.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/01_what_is_bullying.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/01_what_is_bullying.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/01_what_is_bullying.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/02_bullying_types.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/02_bullying_types.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/02_bullying_types.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/03_reasonable_management.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/03_reasonable_management.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/03_reasonable_management.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/04_how_to_complain.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/04_how_to_complain.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/04_how_to_complain.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/05_employer_obligations.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/05_employer_obligations.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/05_employer_obligations.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/06_investigation_process.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/06_investigation_process.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/06_investigation_process.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/07_legal_deadlines.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/07_legal_deadlines.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/07_legal_deadlines.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/08_no_adverse_treatment.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/08_no_adverse_treatment.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/08_no_adverse_treatment.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/09_top_executive_complaint.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/09_top_executive_complaint.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/09_top_executive_complaint.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+  ⚠ [compositions/10_friendly_workplace.html] studio_missing_editable_id: <div data-start="0" data-track-index="0"> has no id, so Studio cannot use a stable edit target for its timeline and canvas controls.
+    Fix: Add a stable, human-readable id such as id="hero-title" or id="scene-1-card" to every timeline-visible element you want agents or Studio to edit.
+  ⚠ [compositions/10_friendly_workplace.html] timeline_track_too_dense: Track 1 has 4 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.
+    Fix: Move coherent scene groups into smaller .html files and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate.
+  ⚠ [compositions/10_friendly_workplace.html] google_fonts_import: Composition loads fonts from fonts.googleapis.com. The producer resolves Google Fonts during compile/render, but raw external font requests add latency and can fail before canonicalization. Prefer mapped family names or local @font-face declarations when possible.
+    Fix: For bundled fonts, remove the Google Fonts <link> or @import and keep the font-family declaration. For custom fonts, use @font-face { font-family: '...'; src: url('...woff2'); }.
+
+T  hyperframes preview
+[?25l|
+o  Studio running
+[?25h
+
+  Project   workplace-bullying-videos
+  Studio    http://localhost:3002
+
+  Edit with your AI agent — it has HyperFrames skills installed.
+  Changes reload automatically in the studio.
+
+  Press Ctrl+C to stop
+
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[BrowserManager] Browser launched (HeadlessChrome/131.0.6778.85, screenshot, gl=--use-gl=angle --use-angle=swiftshader, headlessShell=true, platform=win32)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render] Pipeline started {"platform":"win32","arch":"x64","nodeVersion":"v24.16.0","fps":{"num":30,"den":1},"format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeout":300000,"browserTimeout":120000,"pageNavigationTimeout":60000,"playerReadyTimeout":45000}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"pipeline","status":"checkpoint","elapsedMs":5,"message":"started","format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeoutMs":300000,"pageNavigationTimeoutMs":60000,"playerReadyTimeoutMs":45000,"requestedWorkers":"auto"}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"compile","status":"start","elapsedMs":9,"needsAlpha":false}
+[INFO] [Render] Pipeline started {"platform":"win32","arch":"x64","nodeVersion":"v24.16.0","fps":{"num":30,"den":1},"format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeout":300000,"browserTimeout":120000,"pageNavigationTimeout":60000,"playerReadyTimeout":45000}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"pipeline","status":"checkpoint","elapsedMs":1,"message":"started","format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeoutMs":300000,"pageNavigationTimeoutMs":60000,"playerReadyTimeoutMs":45000,"requestedWorkers":"auto"}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"compile","status":"start","elapsedMs":3,"needsAlpha":false}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render] Pipeline started {"platform":"win32","arch":"x64","nodeVersion":"v24.16.0","fps":{"num":30,"den":1},"format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeout":300000,"browserTimeout":120000,"pageNavigationTimeout":60000,"playerReadyTimeout":45000}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"pipeline","status":"checkpoint","elapsedMs":2,"message":"started","format":"mp4","quality":"standard","browserGpuMode":"software","forceScreenshot":false,"protocolTimeoutMs":300000,"pageNavigationTimeoutMs":60000,"playerReadyTimeoutMs":45000,"requestedWorkers":"auto"}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"compile","status":"start","elapsedMs":4,"needsAlpha":false}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Inlined CDN script: https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js
+[INFO] Compiled composition metadata {"entryFile":"index.html","staticDuration":30,"width":1920,"height":1080,"videoCount":0,"audioCount":0,"renderModeHints":{"recommendScreenshot":false,"reasons":[]}}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"compile","status":"end","elapsedMs":38420,"durationMs":38416}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"compile","status":"checkpoint","elapsedMs":38807,"message":"composition metadata resolved","width":1920,"height":1080,"videoCount":0,"audioCount":0,"imageCount":0,"deviceScaleFactor":1,"forceScreenshot":false,"compositionHash":"b7e1d252741a9150"}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"browser_probe","status":"start","elapsedMs":38809,"forceScreenshot":false}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"browser_probe","status":"end","elapsedMs":38834,"durationMs":25}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"browser_probe","status":"checkpoint","elapsedMs":39280,"message":"duration resolved","durationSeconds":30,"totalFrames":900,"compositionHash":"b7e1d252741a9150"}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"video_extract","status":"start","elapsedMs":39281,"videoCount":0}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"video_extract","status":"end","elapsedMs":39282,"durationMs":1}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"video_extract","status":"checkpoint","elapsedMs":39283,"message":"frames resolved","videoCount":0,"extractedVideoCount":0,"totalFramesExtracted":0,"maxFramesPerVideo":0,"avgFramesPerExtractedVideo":null,"vfrPreflightCount":null,"vfrPreflightMs":null,"cacheHits":null,"cacheMisses":null}
+[INFO] [Render] No HDR sources detected — rendering SDR
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"hdr_detection","status":"checkpoint","elapsedMs":39284,"message":"resolved","requestedHdrMode":"auto","effectiveHdr":"sdr","nativeHdrVideoCount":0,"nativeHdrImageCount":0}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"audio_process","status":"start","elapsedMs":39284,"audioCount":0}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"audio_process","status":"end","elapsedMs":39285,"durationMs":0}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"file_server","status":"start","elapsedMs":39285,"reused":false}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"file_server","status":"end","elapsedMs":39309,"durationMs":23}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_calibration","status":"start","elapsedMs":39311,"forceScreenshot":false}
+[INFO] [Render] Calibration config {"protocolTimeout":30000,"parentProtocolTimeout":300000,"forceScreenshot":false,"totalFrames":900}
+[INFO] Launching browser for capture calibration...
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Initializing calibration session...
+[initSession:screenshot] page.goto start (1ms)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Compiled composition metadata {"entryFile":"index.html","staticDuration":30,"width":1920,"height":1080,"videoCount":0,"audioCount":0,"renderModeHints":{"recommendScreenshot":false,"reasons":[]}}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"compile","status":"end","elapsedMs":96085,"durationMs":96075}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"compile","status":"checkpoint","elapsedMs":96715,"message":"composition metadata resolved","width":1920,"height":1080,"videoCount":0,"audioCount":0,"imageCount":0,"deviceScaleFactor":1,"forceScreenshot":false,"compositionHash":"8bc2d4cf6f09d2b9"}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"browser_probe","status":"start","elapsedMs":96726,"forceScreenshot":false}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"browser_probe","status":"end","elapsedMs":96789,"durationMs":24}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"browser_probe","status":"checkpoint","elapsedMs":97521,"message":"duration resolved","durationSeconds":30,"totalFrames":900,"compositionHash":"8bc2d4cf6f09d2b9"}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"video_extract","status":"start","elapsedMs":97526,"videoCount":0}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"video_extract","status":"end","elapsedMs":97563,"durationMs":0}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"video_extract","status":"checkpoint","elapsedMs":97564,"message":"frames resolved","videoCount":0,"extractedVideoCount":0,"totalFramesExtracted":0,"maxFramesPerVideo":0,"avgFramesPerExtractedVideo":null,"vfrPreflightCount":null,"vfrPreflightMs":null,"cacheHits":null,"cacheMisses":null}
+[INFO] [Render] No HDR sources detected — rendering SDR
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"hdr_detection","status":"checkpoint","elapsedMs":97565,"message":"resolved","requestedHdrMode":"auto","effectiveHdr":"sdr","nativeHdrVideoCount":0,"nativeHdrImageCount":0}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"audio_process","status":"start","elapsedMs":97589,"audioCount":0}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"audio_process","status":"end","elapsedMs":97607,"durationMs":0}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"file_server","status":"start","elapsedMs":97609,"reused":false}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"file_server","status":"end","elapsedMs":97621,"durationMs":12}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"capture_calibration","status":"start","elapsedMs":97630,"forceScreenshot":false}
+[INFO] [Render] Calibration config {"protocolTimeout":30000,"parentProtocolTimeout":300000,"forceScreenshot":false,"totalFrames":900}
+[INFO] Launching browser for capture calibration...
+[INFO] Still waiting for browser initialization... (32.5s elapsed)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_calibration","status":"end","elapsedMs":131856,"durationMs":92545}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_calibration","status":"checkpoint","elapsedMs":131857,"message":"resolved","forceScreenshot":false,"multiplier":8,"p95Ms":null}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"worker_resolution","status":"checkpoint","elapsedMs":131860,"message":"resolved","workerCount":1}
+[INFO] streaming-encode gate {"enabled":true,"configFlag":true,"outputFormat":"mp4","workerCount":1,"durationSeconds":30,"maxDurationSeconds":240}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_strategy","status":"checkpoint","elapsedMs":131871,"message":"resolved","workerCount":1,"forceScreenshot":false,"captureBeyondViewport":null,"useStreamingEncode":true,"useLayeredComposite":false,"usePageSideCompositing":false,"hasHdrContent":false,"hasShaderTransitions":false,"isPngSequence":false}
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_streaming","status":"start","elapsedMs":131872,"workerCount":1,"forceScreenshot":false}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Compiled composition metadata {"entryFile":"index.html","staticDuration":30,"width":1920,"height":1080,"videoCount":0,"audioCount":0,"renderModeHints":{"recommendScreenshot":false,"reasons":[]}}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"compile","status":"end","elapsedMs":171270,"durationMs":171265}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"compile","status":"checkpoint","elapsedMs":171906,"message":"composition metadata resolved","width":1920,"height":1080,"videoCount":0,"audioCount":0,"imageCount":0,"deviceScaleFactor":1,"forceScreenshot":false,"compositionHash":"8bc2d4cf6f09d2b9"}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"browser_probe","status":"start","elapsedMs":171907,"forceScreenshot":false}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"browser_probe","status":"end","elapsedMs":171932,"durationMs":25}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"browser_probe","status":"checkpoint","elapsedMs":172630,"message":"duration resolved","durationSeconds":30,"totalFrames":900,"compositionHash":"8bc2d4cf6f09d2b9"}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"video_extract","status":"start","elapsedMs":172632,"videoCount":0}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"video_extract","status":"end","elapsedMs":172633,"durationMs":0}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"video_extract","status":"checkpoint","elapsedMs":172634,"message":"frames resolved","videoCount":0,"extractedVideoCount":0,"totalFramesExtracted":0,"maxFramesPerVideo":0,"avgFramesPerExtractedVideo":null,"vfrPreflightCount":null,"vfrPreflightMs":null,"cacheHits":null,"cacheMisses":null}
+[INFO] [Render] No HDR sources detected — rendering SDR
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"hdr_detection","status":"checkpoint","elapsedMs":172635,"message":"resolved","requestedHdrMode":"auto","effectiveHdr":"sdr","nativeHdrVideoCount":0,"nativeHdrImageCount":0}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"audio_process","status":"start","elapsedMs":172636,"audioCount":0}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"audio_process","status":"end","elapsedMs":172637,"durationMs":0}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"file_server","status":"start","elapsedMs":172637,"reused":false}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"file_server","status":"end","elapsedMs":172651,"durationMs":13}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"capture_calibration","status":"start","elapsedMs":172688,"forceScreenshot":false}
+[INFO] [Render] Calibration config {"protocolTimeout":30000,"parentProtocolTimeout":300000,"forceScreenshot":false,"totalFrames":900}
+[INFO] Launching browser for capture calibration...
+[HyperFrames] render runtime fps [object Object]
+[INFO] Initializing calibration session...
+[initSession:screenshot] page.goto start (0ms)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[initSession:screenshot] page.goto start (0ms)
+[INFO] Initializing calibration session...
+[initSession:screenshot] page.goto start (0ms)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Still waiting for browser initialization... (35.5s elapsed)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] Still waiting for browser initialization... (37.5s elapsed)
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"capture_calibration","status":"end","elapsedMs":248886,"durationMs":151235}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"capture_calibration","status":"checkpoint","elapsedMs":248887,"message":"resolved","forceScreenshot":false,"multiplier":8,"p95Ms":null}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"worker_resolution","status":"checkpoint","elapsedMs":248893,"message":"resolved","workerCount":1}
+[INFO] streaming-encode gate {"enabled":true,"configFlag":true,"outputFormat":"mp4","workerCount":1,"durationSeconds":30,"maxDurationSeconds":240}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"capture_strategy","status":"checkpoint","elapsedMs":248896,"message":"resolved","workerCount":1,"forceScreenshot":false,"captureBeyondViewport":null,"useStreamingEncode":true,"useLayeredComposite":false,"usePageSideCompositing":false,"hasHdrContent":false,"hasShaderTransitions":false,"isPngSequence":false}
+[INFO] [Render:trace] {"renderJobId":"67c0d645-fa77-473c-b319-3eeae2d16478","phase":"capture_streaming","status":"start","elapsedMs":248910,"workerCount":1,"forceScreenshot":false}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"capture_calibration","status":"end","elapsedMs":251078,"durationMs":78390}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"capture_calibration","status":"checkpoint","elapsedMs":251079,"message":"resolved","forceScreenshot":false,"multiplier":8,"p95Ms":null}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"worker_resolution","status":"checkpoint","elapsedMs":251080,"message":"resolved","workerCount":1}
+[INFO] streaming-encode gate {"enabled":true,"configFlag":true,"outputFormat":"mp4","workerCount":1,"durationSeconds":30,"maxDurationSeconds":240}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"capture_strategy","status":"checkpoint","elapsedMs":251081,"message":"resolved","workerCount":1,"forceScreenshot":false,"captureBeyondViewport":null,"useStreamingEncode":true,"useLayeredComposite":false,"usePageSideCompositing":false,"hasHdrContent":false,"hasShaderTransitions":false,"isPngSequence":false}
+[INFO] [Render:trace] {"renderJobId":"06d9f9d9-d750-42be-8af3-41b485069863","phase":"capture_streaming","status":"start","elapsedMs":251081,"workerCount":1,"forceScreenshot":false}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Render:trace] {"renderJobId":"7e3ef172-3d6f-4890-a9b4-1724ae9e2d5f","phase":"capture_streaming","status":"error","elapsedMs":259249,"durationMs":127377,"message":"Navigation timeout of 60000 ms exceeded"}
+[INFO] [Render] Failure summary {"failedStage":"Failed: Navigation timeout of 60000 ms exceeded","error":"Navigation timeout of 60000 ms exceeded","elapsedMs":259252,"stageTimings":{"compileOnlyMs":37973,"browserProbeMs":23,"compileMs":39277,"videoExtractMs":0,"audioProcessMs":0},"isTimeout":true,"workers":"auto","protocolTimeout":300000,"observedFailedPhase":"capture_streaming","observedLastPhase":"capture_streaming","observedLastStatus":"error","browserDiagnostics":{"total":5,"errors":0,"pageErrors":0,"requestFailed":0,"httpErrors":0,"navigationStarts":2,"navigationFailures":2,"consoleErrors":0,"consoleWarnings":0},"extraction":{"videoCount":0,"extractedVideoCount":0,"totalFramesExtracted":0,"maxFramesPerVideo":0},"browserConsoleErrors":["[FrameCapture:NAV] page.goto start mode=screenshot timeoutMs=60000 url=http://localhost:52034/index.html","[FrameCapture:ERROR] page.goto failed mode=screenshot timeoutMs=60000 elapsedMs=61025 url=http://localhost:52034/index.html error=Navigation timeout of 60000 ms exceeded","[FrameCapture:NAV] page.goto start mode=screenshot timeoutMs=60000 url=http://localhost:52034/index.html","[FrameCapture:ERROR] page.goto failed mode=screenshot timeoutMs=60000 elapsedMs=60084 url=http://localhost:52034/index.html error=Navigation timeout of 60000 ms exceeded"]}
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[HyperFrames] render runtime fps [object Object]
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[HyperFrames] render runtime fps [object Object]
+[HyperFrames] render runtime fps [object Object]
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[INFO] [Compiler] Fetched 945 font face(s) for "Noto Sans TC" from Google Fonts (cached to C:\Users\user\.cache\hyperframes\fonts\noto-sans-tc)
+[INFO] [Compiler] Injected deterministic @font-face rules for 1 requested font families
+[initSession:screenshot] page.goto start (0ms)
+[initSession:screenshot] page.goto start (0ms)
