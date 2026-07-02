@@ -64,6 +64,12 @@ venv/
 **/.debug/
 **/.media/
 
+# HyperFrames deliverables that should be versioned
+!video/workplace-bullying-videos/output/
+!video/workplace-bullying-videos/output/*.mp4
+!video/workplace-bullying-videos/output/*.webm
+!video/workplace-bullying-videos/output/*.mov
+
 # AI Agent 設定檔
 CLAUDE.md
 AGENTS.md
