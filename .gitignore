@@ -27,6 +27,43 @@ assets/case_*
 *.swp
 *.swo
 
+# 環境變數與本機設定
+.env
+.env.*
+!.env.example
+*.local
+
+# Node.js / 前端工具
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+dist/
+build/
+.vite/
+
+# Python / 腳本暫存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Log / 暫存檔
+*.log
+*.tmp
+*.temp
+*.bak
+
+# HyperFrames 產物與本機快取
+**/.thumbnails/
+**/hyperframes-preview*.log
+**/renders/
+**/output/
+**/snapshots/
+**/.debug/
+**/.media/
+
 # AI Agent 設定檔
 CLAUDE.md
 AGENTS.md
